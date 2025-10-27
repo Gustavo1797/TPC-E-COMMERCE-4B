@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPC E-COMMERCE Grupo 4B", "TPC E-COMMERCE Grupo 4B\TPC E-COMMERCE Grupo 4B.csproj", "{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dominio", "dominio\dominio.csproj", "{E00D984C-8942-4DD2-AE04-F8A780C08851}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00D984C-8942-4DD2-AE04-F8A780C08851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00D984C-8942-4DD2-AE04-F8A780C08851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00D984C-8942-4DD2-AE04-F8A780C08851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00D984C-8942-4DD2-AE04-F8A780C08851}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
