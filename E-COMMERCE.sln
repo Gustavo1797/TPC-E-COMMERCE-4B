@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPC E-COMMERCE Grupo 4B", "TPC E-COMMERCE Grupo 4B\TPC E-COMMERCE Grupo 4B.csproj", "{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC7A9ED-ECC5-4B9D-A4E2-07ADEB55037D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF33CDE2-1C9E-4656-B6F1-4611635B7C31}
+	EndGlobalSection
+EndGlobal
