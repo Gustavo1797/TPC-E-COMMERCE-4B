@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace dominio
+{
+    public class Producto
+    {
+
+        public int IdProducto { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public float Precio { get; set; }
+        public int Stock { get; set; }
+        public Categoria Categoria { get; set; }
+        public Marca Marca { get; set; }
+        public Proveedor Proveedor { get; set; }
+        public float Peso { get; set; }
+        public bool Estado { get; set; }
+        public List<Imagen> ListImagen { get; set; }
+
+    }
+}
