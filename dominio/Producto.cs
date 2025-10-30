@@ -8,6 +8,10 @@ namespace dominio
 {
     public class Producto
     {
+        public Producto()
+        {
+            ListImagen = new List<Imagen>();
+        }
 
         public int IdProducto { get; set; }
         public string Nombre { get; set; }

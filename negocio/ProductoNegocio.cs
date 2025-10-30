@@ -19,11 +19,12 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.IdMarca,it.IdProveedor,it.Peso,it.Estado,e.ImagenUrl \r\nfrom ITEM it, IMAGEN E, MARCA M, CATEGORIA C" +
-                    "WHERE it.IdProducto = e.IdProducto" +
-                    "AND it.IdCategoria = c.IdCategoria" +
-                    "AND it.IdMarca = m.IdMarca" +
-                    "order by it.IdProducto");
+                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.IdMarca,it.IdProveedor,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
+                    " from ITEM it, IMAGEN E, MARCA M, CATEGORIA C" +
+                    " WHERE it.IdProducto = e.IdProducto" +
+                    " AND it.IdCategoria = c.IdCategoria" +
+                    " AND it.IdMarca = m.IdMarca" +
+                    " order by it.IdProducto");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -50,8 +51,8 @@ namespace negocio
                     }
 
                     Imagen auxImagen = new Imagen();
-                    auxImagen.ID = (int)datos.Lector["IdImagenes"];
-                    auxImagen.IdArticulo = (int)datos.Lector["Id"];
+                    auxImagen.ID = (int)datos.Lector["IdImagen"];
+                    auxImagen.IdArticulo = (int)datos.Lector["IdProducto"];
                     auxImagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
                     prdAct.ListImagen.Add(auxImagen);
                 }
