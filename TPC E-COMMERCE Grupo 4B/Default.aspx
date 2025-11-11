@@ -1,69 +1,52 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPage.master"
-    CodeBehind="Default.aspx.cs" Inherits="TPC_E_COMMERCE_Grupo_4B.WebForm1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true"
+    MasterPageFile="~/MasterPage.master"
+    CodeBehind="Default.aspx.cs"
+    Inherits="TPC_E_COMMERCE_Grupo_4B.WebForm1" %>
 
 <asp:Content ID="TitleContent" ContentPlaceHolderID="TitlePlaceHolder" runat="server">
     Inicio
 </asp:Content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1 class="text-3xl font-bold mb-3">BIENVENIDO A MUÑECO STORE, LA PAGINA DE MEJORES PERFUMES DEL MUNDO </h1>
-    <p class="text-slate-600 dark:text-slate-400">
-        Esta es la página principal. La MasterPage ya funciona correctamente.
+
+    <h1 class="h3 mb-3">Bienvenido a Muñeco.store</h1>
+    <p class="text-muted mb-4">
+        Descubrí nuestros perfumes destacados.
     </p>
 
-    <div class="row">
-    <%
-        foreach (dominio.Producto prd in listProductos)
-        {
-%>
-    <div class='col-md-4 mb-4'>
-        <div class="card h-100">
+    <!-- 🔽 SECCIÓN DE PRODUCTOS (ancla para el botón "Productos" del menú) -->
+    <div id="productos">
+        <div class="row">
+            <% foreach (dominio.Producto prd in listProductos) { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <!-- Imagen principal -->
+                        <img src="<%= prd.ListImagen[0].ImagenUrl %>"
+                             class="card-img-top"
+                             alt="<%= prd.Nombre %>" />
 
-            <div id="carouselExampleFade<%=prd.IdProducto%>" class="carousel slide carousel-fade">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title"><%= prd.Nombre %></h5>
+                            <p class="card-text small text-muted"><%= prd.Descripcion %></p>
+                            <p class="fw-bold mb-2 text-primary">
+                                $ <%= prd.Precio.ToString("N2") %>
+                            </p>
 
-                <div class="carousel-inner">
-                    <%
-                        for (int i = 0; i < prd.ListImagen.Count ; i++)
-                        {
-                            if (i == 0)
-                            {
-                    %>
-                    <div class="carousel-item active">
-                        <img src="<% = prd.ListImagen[i].ImagenUrl%>" class="d-block w-100" alt="...">
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="VerProducto.aspx?id=<%= prd.IdProducto %>"
+                                   class="btn btn-outline-primary btn-sm">
+                                    Ver detalle
+                                </a>
+                                <a href="Carrito.aspx?add=<%= prd.IdProducto %>"
+                                   class="btn btn-primary btn-sm">
+                                    Agregar al carrito
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <%
-                        }
-                        else
-                        {
-                    %>
-                    <div class="carousel-item">
-                        <img src="<% =prd.ListImagen[i].ImagenUrl %>" class="d-block w-100" alt="...">
-                    </div>
-                    <%
-                            }
-                        }
-                    %>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade<%=prd.IdProducto %>" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade<%=prd.IdProducto %>" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"><%= prd.Nombre %></h5>
-                <p class="card-text"><%= prd.Descripcion %></p>
-                <a href="VerProducto.aspx?id=<%=prd.IdProducto %>" class="btn btn-primary">Elegir</a>
-            </div>
+            <% } %>
         </div>
     </div>
-    <%
-        }
-%>
-</div>
 
 </asp:Content>
