@@ -14,7 +14,7 @@ namespace negocio
             List<Pedido> lista = new List<Pedido>();
             AccesoDatos datos = new AccesoDatos();
             Pedido pedidoAct = null;
-            int idPedidoAct = -1, idNuevoPedido = 1;
+            int idPedidoAct = -1, idNuevoPedido = -1;
 
             try
             {

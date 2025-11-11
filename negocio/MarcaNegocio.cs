@@ -14,7 +14,7 @@ namespace negocio
             List<Marca> lista = new List<Marca>();
             AccesoDatos datos = new AccesoDatos();
             Marca marcaAct = null;
-            int idMarcaAct = -1, idMarcaNueva = 1;
+            int idMarcaAct = -1, idMarcaNueva = -1;
 
             try
             {
