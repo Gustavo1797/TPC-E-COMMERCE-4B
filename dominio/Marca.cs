@@ -14,12 +14,6 @@ namespace dominio
         public string descripcion { get; set; }
 
         public string paisOrigen { get; set; }
+        public bool estado { get; set; }
     }
 }
-
-/*
- idMarca
-nombre
-descripcion
-paisOrigen
- */
