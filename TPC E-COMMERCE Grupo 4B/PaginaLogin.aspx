@@ -47,7 +47,7 @@
 
                 <p class="text-center small text-muted mb-0">
                     ¿No tenés cuenta?
-                    <a href="Registro.aspx" class="text-primary text-decoration-none">Registrate acá</a>.
+                    <a href="AltaUsuario.aspx" class="text-primary text-decoration-none">Registrate acá</a>.
                 </p>
             </div>
         </div>

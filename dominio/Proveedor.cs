@@ -10,8 +10,8 @@ namespace dominio
     {
         public int IdProveedor { get; set; }
         public int IdUsuario { get; set; }
-        public string Nombre { get; set; }
-        public int Cuit { get; set; }
+        public string RazonSocial { get; set; }
+        public string Cuit { get; set; }
           
     }
 }
