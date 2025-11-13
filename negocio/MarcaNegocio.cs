@@ -51,5 +51,59 @@ namespace negocio
                datos.cerrarConexion();
             }
         }
+        void Agregar(Marca nuevo) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("insert into Marca (IdMarca, Nombre, Descripcion, PaisOrigen, Estado) values (@idMarca, @nombre, @descripcion, @paisOrigen, @estado)");
+                datos.setearParametro("@idMarca", nuevo.idMarca);
+                datos.setearParametro("@Nombre", nuevo.nombre);
+                datos.setearParametro("@descripcion", nuevo.descripcion);
+                datos.setearParametro("@paisOrigen", nuevo.paisOrigen);
+                datos.setearParametro("@estado", nuevo.estado);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        void Modificar(Marca marca) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            datos.setearConsulta("update Marca set IdMarca = @idMarca, Nombre = @nombre, Descripcion = @descripcion, PaisOrigen = @paisOrigen, Estado = @estado");
+
+            datos.setearParametro("@idMarca", marca.idMarca);
+            datos.setearParametro("@nombre", marca.nombre);
+            datos.setearParametro("@descripcion", marca.descripcion);
+            datos.setearParametro("@paisOrigen", marca.paisOrigen);
+            datos.setearParametro("@estado", marca.estado);
+
+            datos.ejecutarAccion();
+        }
+
+        public void Eliminar(int Id)
+        {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.setearConsulta(" delete from Marca where idMarca = @idMarca ");
+                datos.setearParametro("@idMarca ", Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

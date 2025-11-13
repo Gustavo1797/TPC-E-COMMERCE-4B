@@ -42,12 +42,6 @@ namespace negocio
                         prdAct.Stock = (int)datos.Lector["Stock"];
                         prdAct.Categoria = new Categoria();
                         prdAct.Categoria.IdCatergoria = (int)datos.Lector["IdCategoria"];
-                        prdAct.Marca = new Marca();
-                        prdAct.Marca.idMarca = (int)datos.Lector["IdMarca"];
-                        prdAct.Proveedor = new Proveedor();
-                        prdAct.Proveedor.IdProveedor = (int)datos.Lector["IdProveedor"];
-                        prdAct.Peso = (decimal)datos.Lector["Peso"];
-                        prdAct.Estado = (bool)datos.Lector["Estado"];
                     }
 
                     Imagen auxImagen = new Imagen();

@@ -8,7 +8,7 @@ go
 
 Create Table Categoria(
     IdCategoria int not null primary key identity(1, 1),
-    Nombre varchar(50) not null,
+	Nombre varchar(50) not null,
     Descripcion varchar(255) null, -- Agregado: opcional (NULL)
     Estado bit not null
 )
@@ -18,8 +18,9 @@ go
 Create Table Marca(
     IdMarca int not null primary key identity(1, 1),
     Nombre varchar(50) not null,
-    Descripcion varchar(255) null -- Agregado: opcional (NULL)
-    ,Estado bit not null
+    Descripcion varchar(255) null, -- Agregado: opcional (NULL)
+	PaisOrigen varchar(50) null, 
+    Estado bit not null
 )
 go
 
@@ -67,7 +68,7 @@ go
 
 
 
-Insert into Categoria(Nombre, Descripcion, Estado)
+Insert into Categoria(Nombre ,Descripcion, Estado)
 Values ('Celulares', 'Todos los celulares', 0);
 
 Insert into Marca(Nombre, Descripcion, Estado)
