@@ -72,6 +72,7 @@
     <Content Include="AltaUsuario.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="ItemSeleccionado.aspx" />
     <Content Include="PaginaLogin.aspx" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
@@ -111,6 +112,13 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemSeleccionado.aspx.cs">
+      <DependentUpon>ItemSeleccionado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemSeleccionado.aspx.designer.cs">
+      <DependentUpon>ItemSeleccionado.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>

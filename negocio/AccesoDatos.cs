@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace negocio
         {
 
             //conexion = new SqlConnection("Server = localhost, 1433; Database = TPC_ECOMMERCE_4B_DB; User Id = sa; Password = Facu-123456;TrustServerCertificate=True;");
-            conexion = new SqlConnection("Server = localhost, 1433; Database = TPC_ECOMMERCE_4B_DB; User Id = sa; Password =BaseDeDatos#2;TrustServerCertificate=True;");
+            conexion = new SqlConnection("Server = localhost, 1433; Database = TPC_ECOMMERCE_4B_DB; User Id = sa; Password =Facu-123456;TrustServerCertificate=True;");
             comando = new SqlCommand();
 
         }
@@ -31,6 +32,12 @@ namespace negocio
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
+        }
+
+        public void setearStoreProcedure(String storeProcedure)
+        {
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.CommandText = storeProcedure;
         }
 
         public void ejecutarLectura()

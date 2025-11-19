@@ -33,7 +33,7 @@
                             </p>
 
                             <div class="mt-auto d-flex gap-2">
-                                <a href="VerProducto.aspx?id=<%= prd.IdProducto %>"
+                                <a href="ItemSeleccionado.aspx?id=<%= prd.IdProducto %>"
                                    class="btn btn-outline-primary btn-sm">
                                     Ver detalle
                                 </a>
