@@ -10,10 +10,7 @@ namespace dominio
     {
         public int idMarca { get; set; }
         public string nombre { get; set; }
-
         public string descripcion { get; set; }
-
-        public string paisOrigen { get; set; }
         public bool estado { get; set; }
     }
 }

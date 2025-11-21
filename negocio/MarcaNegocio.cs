@@ -32,7 +32,6 @@ namespace negocio
                         marcaAct.idMarca = idMarcaNueva;
                         marcaAct.nombre = (string)datos.Lector["Nombre"];
                         marcaAct.descripcion = (string)datos.Lector["Descripcion"];
-                        marcaAct.paisOrigen = (string)datos.Lector["PaisOrigen"];
                         //opcional(?
                         marcaAct.estado = (bool)datos.Lector["Estado"];
                     }
@@ -61,7 +60,6 @@ namespace negocio
                 datos.setearParametro("@idMarca", nuevo.idMarca);
                 datos.setearParametro("@Nombre", nuevo.nombre);
                 datos.setearParametro("@descripcion", nuevo.descripcion);
-                datos.setearParametro("@paisOrigen", nuevo.paisOrigen);
                 datos.setearParametro("@estado", nuevo.estado);
 
                 datos.ejecutarAccion();
@@ -84,7 +82,6 @@ namespace negocio
             datos.setearParametro("@idMarca", marca.idMarca);
             datos.setearParametro("@nombre", marca.nombre);
             datos.setearParametro("@descripcion", marca.descripcion);
-            datos.setearParametro("@paisOrigen", marca.paisOrigen);
             datos.setearParametro("@estado", marca.estado);
 
             datos.ejecutarAccion();

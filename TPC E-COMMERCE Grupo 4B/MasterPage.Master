@@ -92,6 +92,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="Default.aspx">Inicio</a>
                         </li>
+
                         <li class="nav-item">
                             
                             <a class="nav-link" href="Default.aspx#productos">
@@ -99,20 +100,31 @@
                                 Productos
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="Categorias.aspx">Categorías</a>
                         </li>
+
                     </ul>
 
                   
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <%if (!negocio.Seguridad.sesionActiva(Session["usuario"])) 
+                            { %>
+                                <li class="nav-item">
                            
-                            <a class="nav-link" href="PaginaLogin.aspx">
-                                <span class="material-symbols-outlined me-1">person</span>
-                                Ingresar
-                            </a>
-                        </li>
+                                    <a class="nav-link" href="PaginaLogin.aspx">
+                                        <span class="material-symbols-outlined me-1">person</span>
+                                        Ingresar
+                                    </a>
+                                </li>
+                        <%  }
+                            else
+                            {
+                        %>
+                                    <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-outline-primary me-2" OnClick="btnSalir_Click" />
+                        <%  }
+                            %>
                         <li class="nav-item">
                          
                             <a class="nav-link" href="Carrito.aspx">

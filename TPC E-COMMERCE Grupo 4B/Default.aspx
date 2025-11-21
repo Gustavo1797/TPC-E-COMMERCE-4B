@@ -17,7 +17,8 @@
     <!-- 🔽 SECCIÓN DE PRODUCTOS (ancla para el botón "Productos" del menú) -->
     <div id="productos">
         <div class="row">
-            <% foreach (dominio.Producto prd in listProductos) { %>
+            <% if(listProductos != null) {
+                foreach (dominio.Producto prd in listProductos) { %>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <!-- Imagen principal -->
@@ -45,7 +46,8 @@
                         </div>
                     </div>
                 </div>
-            <% } %>
+            <%}
+                } %>
         </div>
     </div>
 

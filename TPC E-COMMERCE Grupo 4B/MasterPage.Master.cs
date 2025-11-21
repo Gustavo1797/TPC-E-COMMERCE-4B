@@ -1,4 +1,5 @@
-﻿using System;
+﻿using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,17 @@ namespace TPC_E_COMMERCE_Grupo_4B
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!(Page is PaginaLogin))
+            {
+                if (!Seguridad.sesionActiva(Session["usuario"]))
+                Response.Redirect("PaginaLogin.aspx", false);
+            }
+        }
 
+        protected void btnSalir_Click(object sender, EventArgs e) 
+        {
+            Session.Clear();
+            Response.Redirect("PaginaLogin.aspx",false);
         }
     }
 }

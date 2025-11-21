@@ -8,10 +8,8 @@ namespace dominio
 {
     public enum TipoUsuario 
     {
-        SINCLASE = 0,
-        COMPRADOR = 1,
-        VENDEDOR = 2,
-        ADMIN = 3
+        ADMIN = 0, 
+        USUARIOS = 1
     }
 
     public class Usuario

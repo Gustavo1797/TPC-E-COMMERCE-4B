@@ -21,8 +21,4 @@ namespace TPC_E_COMMERCE_Grupo_4B
             }
         }
     }
-
-
-
-
 }
