@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true"
+﻿    <%@ Master Language="C#" AutoEventWireup="true"
     CodeBehind="MasterPage.master.cs"
     Inherits="TPC_E_COMMERCE_Grupo_4B.MasterPage" %>
 
@@ -46,6 +46,12 @@
         
         html {
             scroll-behavior: smooth;
+        }
+
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
         }
     </style>
 
@@ -107,24 +113,35 @@
 
                     </ul>
 
-                  
+                    <!-- Contenedor lado derecho-->
                     <ul class="navbar-nav mb-2 mb-lg-0">
+                        
+                        <!-- Boton ingresar -->
                         <%if (!negocio.Seguridad.sesionActiva(Session["usuario"])) 
                             { %>
-                                <li class="nav-item">
-                           
+                                <li class="nav-item">                           
                                     <a class="nav-link" href="PaginaLogin.aspx">
                                         <span class="material-symbols-outlined me-1">person</span>
                                         Ingresar
-                                    </a>
+                                    </a>    
                                 </li>
-                        <%  }
-                            else
-                            {
-                        %>
-                                    <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-outline-primary me-2" OnClick="btnSalir_Click" />
-                        <%  }
-                            %>
+                        <% }
+                           else
+                           {%>
+                            <!-- Despegable Perfil -->
+                            <li class="nav-item dropdown">                           
+                                <a class="nav-link dropdown-toggle" href="#">
+                                    Perfil
+                                </a>
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" >Comprar</a>
+                                    <a class="dropdown-item" >Vender</a>
+                                </div>
+                            </li>
+
+                        <%}%>
+                        <!-- Boton Carrito -->
                         <li class="nav-item">
                          
                             <a class="nav-link" href="Carrito.aspx">
@@ -132,6 +149,17 @@
                                 Carrito
                             </a>
                         </li>
+
+                        <!-- Boton Salir -->
+                         <%if (negocio.Seguridad.sesionActiva(Session["usuario"]))
+                             { %>
+                        <li class="nav-item">
+                            <asp:LinkButton class="nav-link" OnClick="btnSalir_Click" runat="server">
+                                Salir
+                            </asp:LinkButton>
+                        </li>
+                        <%  } %>
+
                     </ul>
                 </div>
             </div>
