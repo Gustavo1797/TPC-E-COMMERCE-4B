@@ -4,4 +4,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+
+    <h1>
+        Alta Proveedor
+    </h1>
+
 </asp:Content>

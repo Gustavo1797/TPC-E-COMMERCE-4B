@@ -24,5 +24,11 @@ namespace TPC_E_COMMERCE_Grupo_4B
             Session.Clear();
             Response.Redirect("PaginaLogin.aspx",false);
         }
+
+        protected void btnVender_Click(object sender, EventArgs e) 
+        {
+            if (!Seguridad.sesionPerfilProveedor(Session["proveedor"]))
+                Response.Redirect("AltaProveedor.aspx", false);
+        }
     }
 }

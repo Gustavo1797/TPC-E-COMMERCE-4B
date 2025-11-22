@@ -39,6 +39,33 @@ namespace negocio
             }
         }
 
+        public int Modificar(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = "update Usuarios (Password, Nombre, ImagenUrl) " +
+                          "values(@Password, @Nombre, @ImagenUrl);";
+
+                datos.setearConsulta(consulta);
+
+                datos.setearParametro("@Password",  usuario.Password);
+                datos.setearParametro("@Nombre",    usuario.Nombre);
+                datos.setearParametro("@ImagenUrl", usuario.ImagenUrl);
+
+                return datos.ejecutarReturn();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public bool Login(Usuario usuario) 
         {
             AccesoDatos datos = new AccesoDatos();

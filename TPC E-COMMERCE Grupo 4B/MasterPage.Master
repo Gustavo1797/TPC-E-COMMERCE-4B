@@ -57,9 +57,9 @@
 
     
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
-</head>
+</head>cc
 
-<body>
+<body>c
     <form id="form1" runat="server" class="page-wrapper">
 
         
@@ -136,7 +136,9 @@
 
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" >Comprar</a>
-                                    <a class="dropdown-item" >Vender</a>
+                                    <asp:LinkButton class="dropdown-item" OnClick="btnVender_Click" runat="server">
+                                        Vender
+                                    </asp:LinkButton>                                    
                                 </div>
                             </li>
 
@@ -178,7 +180,8 @@
                 <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
             </div>
         </main>
-
+        
+        <!-- Pie de pagina -->
         <footer class="bg-light border-top py-4 mt-auto">
             <div class="container small">
                 <div class="row">

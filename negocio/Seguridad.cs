@@ -17,5 +17,14 @@ namespace negocio
             else 
                 return false;
         }
+
+        public static bool sesionPerfilProveedor(object prov)
+        {
+            Proveedor proveedor = prov != null ? (Proveedor)prov : null;
+            if (proveedor != null && proveedor.IdProveedor != 0)
+                return true;
+            else
+                return false;
+        }
     }
 }
