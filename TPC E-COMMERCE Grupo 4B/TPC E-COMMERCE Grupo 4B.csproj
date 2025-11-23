@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ABMCategorias.aspx" />
+    <Content Include="ABMMarcas.aspx" />
+    <Content Include="AdminDashboard.aspx" />
     <Content Include="AltaCliente.aspx" />
     <Content Include="AltaProveedor.aspx" />
     <Content Include="AltaUsuario.aspx" />
@@ -78,6 +81,27 @@
     <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABMCategorias.aspx.cs">
+      <DependentUpon>ABMCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMCategorias.aspx.designer.cs">
+      <DependentUpon>ABMCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ABMMarcas.aspx.cs">
+      <DependentUpon>ABMMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMMarcas.aspx.designer.cs">
+      <DependentUpon>ABMMarcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminDashboard.aspx.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminDashboard.aspx.designer.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AltaCliente.aspx.cs">
       <DependentUpon>AltaCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

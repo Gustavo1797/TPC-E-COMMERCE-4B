@@ -57,9 +57,9 @@
 
     
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
-</head>cc
+</head>
 
-<body>c
+<body>
     <form id="form1" runat="server" class="page-wrapper">
 
         
@@ -135,10 +135,15 @@
                                 </a>
 
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" >Comprar</a>
+                                    
                                     <asp:LinkButton class="dropdown-item" OnClick="btnVender_Click" runat="server">
                                         Vender
-                                    </asp:LinkButton>                                    
+                                    </asp:LinkButton>
+
+                                    <a class="dropdown-item" href="ABMMarcas.aspx">ABM Marcas</a>
+
+                                    <a class="dropdown-item" >Comprar</a>
+
                                 </div>
                             </li>
 
@@ -167,7 +172,7 @@
             </div>
         </nav>
 
->
+
         <main class="flex-grow-1">
             <div class="container my-4">
                 

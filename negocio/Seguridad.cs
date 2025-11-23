@@ -18,10 +18,10 @@ namespace negocio
                 return false;
         }
 
-        public static bool sesionPerfilProveedor(object prov)
+        public static bool sesionPerfilAdmin(object user)
         {
-            Proveedor proveedor = prov != null ? (Proveedor)prov : null;
-            if (proveedor != null && proveedor.IdProveedor != 0)
+            Usuario usuario = user != null ? (Usuario)user : null;
+            if (usuario != null && usuario.IdUsuario != 0 && usuario.Rol == 0)
                 return true;
             else
                 return false;

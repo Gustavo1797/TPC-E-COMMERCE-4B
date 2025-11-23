@@ -14,32 +14,24 @@ namespace negocio
             List<Marca> lista = new List<Marca>();
             AccesoDatos datos = new AccesoDatos();
             Marca marcaAct = null;
-            int idMarcaAct = -1, idMarcaNueva = -1;
 
             try
             {
-                datos.setearConsulta("select IdMarca, Nombre, Descripcion, PaisOrigen, Estado from Marca");
+                datos.setearConsulta("select IdMarca, Nombre, Descripcion, Estado from Marca order by Estado desc");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read()) 
                 {
-                    idMarcaNueva = datos.Lector.GetInt32(0);
-                    if (idMarcaAct != idMarcaNueva) 
-                    {
-                        if (idMarcaAct != -1) lista.Add(marcaAct);
-                        marcaAct = new Marca();
-                        idMarcaAct = idMarcaNueva;
-                        marcaAct.idMarca = idMarcaNueva;
-                        marcaAct.nombre = (string)datos.Lector["Nombre"];
-                        marcaAct.descripcion = (string)datos.Lector["Descripcion"];
-                        //opcional(?
-                        marcaAct.estado = (bool)datos.Lector["Estado"];
-                    }
+                    marcaAct = new Marca();
+                    marcaAct.idMarca = datos.Lector.GetInt32(0);
+                    marcaAct.nombre = (string)datos.Lector["Nombre"];
+                    marcaAct.descripcion = (string)datos.Lector["Descripcion"];
+                    marcaAct.estado = (bool)datos.Lector["Estado"];    
+                    lista.Add(marcaAct);
                 }
 
-                if (idMarcaAct != -1) lista.Add(marcaAct);
-
                 return lista;
+
             }
             catch (Exception ex)
             {
@@ -50,17 +42,54 @@ namespace negocio
                datos.cerrarConexion();
             }
         }
-        void Agregar(Marca nuevo) 
+        public bool Agregar(Marca nuevo) 
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("insert into Marca (IdMarca, Nombre, Descripcion, PaisOrigen, Estado) values (@idMarca, @nombre, @descripcion, @paisOrigen, @estado)");
-                datos.setearParametro("@idMarca", nuevo.idMarca);
+                string consulta = "insert into Marca (Nombre, Descripcion, Estado) " +
+                    "values (@nombre, @descripcion, @estado)" +
+                    "SELECT SCOPE_IDENTITY();";
+
+                datos.setearConsulta(consulta);
                 datos.setearParametro("@Nombre", nuevo.nombre);
                 datos.setearParametro("@descripcion", nuevo.descripcion);
                 datos.setearParametro("@estado", nuevo.estado);
+
+                if (datos.ejecutarReturn() > 0) 
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void Modificar(Marca marca) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = "update Marca set Nombre = @nombre, Descripcion = @descripcion, Estado = @estado " +
+               "where IdMarca = @IdMarca";
+
+                datos.setearConsulta(consulta);
+
+                datos.setearParametro("@idMarca", marca.idMarca);
+                datos.setearParametro("@nombre", marca.nombre);
+                datos.setearParametro("@descripcion", marca.descripcion);
+                datos.setearParametro("@estado", marca.estado);
 
                 datos.ejecutarAccion();
             }
@@ -72,19 +101,45 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+            
+
+           
         }
-        void Modificar(Marca marca) 
+
+        public Marca GetMarca(int IdMarca)
         {
-            AccesoDatos datos = new AccesoDatos();
+            Marca marca = new Marca();
+            AccesoDatos datos = new AccesoDatos();            
 
-            datos.setearConsulta("update Marca set IdMarca = @idMarca, Nombre = @nombre, Descripcion = @descripcion, PaisOrigen = @paisOrigen, Estado = @estado");
+            try
+            {
+                string consulta = "select IdMarca, Nombre, Descripcion, Estado " +
+                    "from Marca " +
+                    "where IdMarca = @Id " +
+                    "order by Estado desc";
+                datos.setearConsulta(consulta);             
+                datos.setearParametro("@Id", IdMarca);
+                datos.ejecutarLectura();
 
-            datos.setearParametro("@idMarca", marca.idMarca);
-            datos.setearParametro("@nombre", marca.nombre);
-            datos.setearParametro("@descripcion", marca.descripcion);
-            datos.setearParametro("@estado", marca.estado);
+                while (datos.Lector.Read())
+                {
+                    marca.idMarca = (int)datos.Lector["IdMarca"];
+                    marca.nombre = (string)datos.Lector["Nombre"];
+                    marca.descripcion = (string)datos.Lector["Descripcion"];
+                    marca.estado = (bool)datos.Lector["Estado"];
+                }
 
-            datos.ejecutarAccion();
+                return marca;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
         public void Eliminar(int Id)
