@@ -91,10 +91,46 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-               
+               <!-- Contenedor lado Izquierdo-->
                 <div class="collapse navbar-collapse" id="mainNavbar">
-                   
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                   <%if (negocio.Seguridad.sesionPerfilAdmin(Session["usuario"]))
+                       { %>     
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="AdminDashboard.aspx">Dashboard</a>
+                        </li>
+
+                        <li class="nav-item dropdown">                           
+                            <a class="nav-link dropdown-toggle" href="#">
+                                Productos
+                            </a>
+                        
+                            <div class="dropdown-menu">
+                        
+                                <a class="dropdown-item" href="#Default.aspx">Lista de productos </a>
+                        
+                                <a class="dropdown-item" href="#ABMItem.aspx">Alta producto</a>
+                        
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item">                            
+                            <a class="nav-link" href="ABMMarcas.aspx"> Marcas </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="ABMCategorias.aspx">Categorías</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="AltaUsuario.aspx">Usuarios</a>
+                        </li>
+
+                   <%}
+                       else
+                       { %>
+                    
                         <li class="nav-item">
                             <a class="nav-link" href="Default.aspx">Inicio</a>
                         </li>
@@ -110,52 +146,54 @@
                         <li class="nav-item">
                             <a class="nav-link" href="Categorias.aspx">Categorías</a>
                         </li>
-
+                        <%} %>
                     </ul>
+
 
                     <!-- Contenedor lado derecho-->
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         
                         <!-- Boton ingresar -->
-                        <%if (!negocio.Seguridad.sesionActiva(Session["usuario"])) 
-                            { %>
+                        <%if (!negocio.Seguridad.sesionActiva(Session["usuario"]))
+                          { %>
                                 <li class="nav-item">                           
                                     <a class="nav-link" href="PaginaLogin.aspx">
                                         <span class="material-symbols-outlined me-1">person</span>
                                         Ingresar
                                     </a>    
                                 </li>
-                        <% }
-                           else
-                           {%>
-                            <!-- Despegable Perfil -->
-                            <li class="nav-item dropdown">                           
-                                <a class="nav-link dropdown-toggle" href="#">
-                                    Perfil
-                                </a>
+                        <%}
+                          else
+                          {
+                                if (!(negocio.Seguridad.sesionPerfilAdmin(Session["usuario"])))
+                                {%>
+                                    <!-- Despegable Perfil -->
+                                    <li class="nav-item dropdown">                           
+                                        <a class="nav-link dropdown-toggle" href="#">
+                                            Perfil
+                                        </a>
 
-                                <div class="dropdown-menu">
+                                        <div class="dropdown-menu">
 
-                                    <a class="dropdown-item" href="ABMMarcas.aspx">ABM Marcas</a>
+                                            <a class="dropdown-item" href="#">Perfil </a>
 
-                                    <a class="dropdown-item" href="ABMCategorias.aspx">ABM Categoria</a>
+                                            <a class="dropdown-item" >Comprar</a>
 
-                                    <a class="dropdown-item" href="AltaUsuario.aspx">ABM Usuarios</a>
+                                        </div>
+                                    </li>
 
-                                    <a class="dropdown-item" >Comprar</a>
+                                    <!-- Boton Carrito -->
+                                    <li class="nav-item">
+                                     
+                                        <a class="nav-link" href="Carrito.aspx">
+                                            <span class="material-symbols-outlined me-1">shopping_cart</span>
+                                            Carrito
+                                        </a>
+                                    </li>
 
-                                </div>
-                            </li>
-
-                        <%}%>
-                        <!-- Boton Carrito -->
-                        <li class="nav-item">
-                         
-                            <a class="nav-link" href="Carrito.aspx">
-                                <span class="material-symbols-outlined me-1">shopping_cart</span>
-                                Carrito
-                            </a>
-                        </li>
+                        <%      }
+                          } %>
+                        
 
                         <!-- Boton Salir -->
                          <%if (negocio.Seguridad.sesionActiva(Session["usuario"]))
