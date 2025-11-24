@@ -135,10 +135,6 @@
                                 </a>
 
                                 <div class="dropdown-menu">
-                                    
-                                    <asp:LinkButton class="dropdown-item" OnClick="btnVender_Click" runat="server">
-                                        Vender
-                                    </asp:LinkButton>
 
                                     <a class="dropdown-item" href="ABMMarcas.aspx">ABM Marcas</a>
 
