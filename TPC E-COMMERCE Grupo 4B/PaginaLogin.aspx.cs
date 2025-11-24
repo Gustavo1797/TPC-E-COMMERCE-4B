@@ -32,7 +32,6 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 if (usuarioNegocio.Login(usuario))
                 {
                     proveedor = proveedorNegocio.GetProveedor(usuario.IdUsuario);
-                    Session.Add("proveedor", proveedor);
                     Session.Add("usuario", usuario);
                     Response.Redirect("Default.aspx", false);
                 }

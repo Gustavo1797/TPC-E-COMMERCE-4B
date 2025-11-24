@@ -27,12 +27,12 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 { 
                     usuario.Email = txtEmail.Text;
                     usuario.Password = txtPassword.Text;
-                    usuario.Rol = 0;
+                    usuario.Rol = TipoUsuario.USUARIOS;
                     usuario.Activo = true;
                     usuario.fechaRegistro = DateTime.Now;
 
                     usuario.IdUsuario = usuarioNegocio.Agregar(usuario);
-
+                    Session.Add("usuario", usuario);
                     Response.Redirect("Default.aspx", false);
                 }
                 else
