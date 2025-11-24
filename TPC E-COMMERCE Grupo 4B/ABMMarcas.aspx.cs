@@ -22,9 +22,9 @@ namespace TPC_E_COMMERCE_Grupo_4B
         protected void btnClick(object sender, EventArgs e)
         {
             Marca marca = new Marca();
-            marca.nombre = txtNombre.Text;
-            marca.descripcion = txtDescripcion.Text;
-            marca.estado = true;
+            marca.Nombre = txtNombre.Text;
+            marca.Descripcion = txtDescripcion.Text;
+            marca.Estado = true;
 
             if (Session["IdMarca"] == null) 
             {
@@ -33,7 +33,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             } 
             else 
             {
-                marca.idMarca = (int)Session["IdMarca"];
+                marca.IdMarca = (int)Session["IdMarca"];
                 marcaNegocio.Modificar(marca);                
             }
 
@@ -73,9 +73,9 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
             int idMarca = (int)dgvMarcas.SelectedDataKey.Value;
             Marca marca = marcaNegocio.GetMarca(idMarca);
-            txtNombre.Text = marca.nombre;
-            txtDescripcion.Text = marca.descripcion;
-            if (marca.estado) 
+            txtNombre.Text = marca.Nombre;
+            txtDescripcion.Text = marca.Descripcion;
+            if (marca.Estado) 
             { chkEstado.Checked = true; }
             else 
             { chkEstado.Checked = false; }

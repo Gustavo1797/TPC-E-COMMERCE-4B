@@ -22,8 +22,8 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
                 lblNombreItem.Text = producto.Nombre;
                 lblPrecio.Text = producto.Precio.ToString();
-                lblCategoria.Text = producto.Categoria.IdCatergoria.ToString();
-                lblMarca.Text = producto.Marca.idMarca.ToString();                    
+                lblCategoria.Text = producto.Categoria.IdCategoria.ToString();
+                lblMarca.Text = producto.Marca.IdMarca.ToString();                    
                 lblVendedor.Text = producto.Proveedor.IdProveedor.ToString();
                 lblStock.Text = producto.Stock.ToString();
                 lblPeso.Text = producto.Peso.ToString();

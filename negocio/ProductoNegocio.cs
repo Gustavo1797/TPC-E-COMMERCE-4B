@@ -41,7 +41,7 @@ namespace negocio
                         prdAct.Precio = (decimal)datos.Lector["Precio"];
                         prdAct.Stock = (int)datos.Lector["Stock"];
                         prdAct.Categoria = new Categoria();
-                        prdAct.Categoria.IdCatergoria = (int)datos.Lector["IdCategoria"];
+                        prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                     }
 
                     Imagen auxImagen = new Imagen();
@@ -97,10 +97,10 @@ namespace negocio
                         producto.Precio = (decimal)datos.Lector["Precio"];
                         producto.Stock = (int)datos.Lector["Stock"];
                         producto.Marca = new Marca();
-                        producto.Marca.idMarca = (int)datos.Lector["IdMar"];
-                        producto.Marca.nombre = (string)datos.Lector["mNombre"];
+                        producto.Marca.IdMarca = (int)datos.Lector["IdMar"];
+                        producto.Marca.Nombre = (string)datos.Lector["mNombre"];
                         producto.Categoria = new Categoria();
-                        producto.Categoria.IdCatergoria = (int)datos.Lector["IdCat"];
+                        producto.Categoria.IdCategoria = (int)datos.Lector["IdCat"];
                         producto.Categoria.Nombre = (string)datos.Lector["cNombre"];
                         producto.Proveedor = new Proveedor();
                         producto.Proveedor.IdProveedor = (int)datos.Lector["IdProveedor"];

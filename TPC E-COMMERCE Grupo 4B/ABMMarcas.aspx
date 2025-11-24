@@ -31,7 +31,14 @@
             OnPageIndexChanging="dgvMarcas_PageIndexChanging"
             
             DataKeyNames="IdMarca" 
-            OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged">        
+            OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged"> 
+            
+            <EmptyDataTemplate>
+                <div class="alert alert-info mt-2" role="alert">
+                    <h5 class="alert-heading">¡Aún no hay datos!</h5>
+                    No se ha registrado ninguna marca en el sistema.
+                </div>
+            </EmptyDataTemplate>
             
             <PagerStyle CssClass="pagination-ys" HorizontalAlign="Center" />
 

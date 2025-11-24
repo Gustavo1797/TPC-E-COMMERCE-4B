@@ -23,10 +23,10 @@ namespace negocio
                 while (datos.Lector.Read()) 
                 {
                     marcaAct = new Marca();
-                    marcaAct.idMarca = datos.Lector.GetInt32(0);
-                    marcaAct.nombre = (string)datos.Lector["Nombre"];
-                    marcaAct.descripcion = (string)datos.Lector["Descripcion"];
-                    marcaAct.estado = (bool)datos.Lector["Estado"];    
+                    marcaAct.IdMarca = datos.Lector.GetInt32(0);
+                    marcaAct.Nombre = (string)datos.Lector["Nombre"];
+                    marcaAct.Descripcion = (string)datos.Lector["Descripcion"];
+                    marcaAct.Estado = (bool)datos.Lector["Estado"];    
                     lista.Add(marcaAct);
                 }
 
@@ -53,9 +53,9 @@ namespace negocio
                     "SELECT SCOPE_IDENTITY();";
 
                 datos.setearConsulta(consulta);
-                datos.setearParametro("@Nombre", nuevo.nombre);
-                datos.setearParametro("@descripcion", nuevo.descripcion);
-                datos.setearParametro("@estado", nuevo.estado);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@descripcion", nuevo.Descripcion);
+                datos.setearParametro("@estado", nuevo.Estado);
 
                 if (datos.ejecutarReturn() > 0) 
                 {
@@ -86,10 +86,10 @@ namespace negocio
 
                 datos.setearConsulta(consulta);
 
-                datos.setearParametro("@idMarca", marca.idMarca);
-                datos.setearParametro("@nombre", marca.nombre);
-                datos.setearParametro("@descripcion", marca.descripcion);
-                datos.setearParametro("@estado", marca.estado);
+                datos.setearParametro("@idMarca", marca.IdMarca);
+                datos.setearParametro("@nombre", marca.Nombre);
+                datos.setearParametro("@descripcion", marca.Descripcion);
+                datos.setearParametro("@estado", marca.Estado);
 
                 datos.ejecutarAccion();
             }
@@ -123,10 +123,10 @@ namespace negocio
 
                 while (datos.Lector.Read())
                 {
-                    marca.idMarca = (int)datos.Lector["IdMarca"];
-                    marca.nombre = (string)datos.Lector["Nombre"];
-                    marca.descripcion = (string)datos.Lector["Descripcion"];
-                    marca.estado = (bool)datos.Lector["Estado"];
+                    marca.IdMarca = (int)datos.Lector["IdMarca"];
+                    marca.Nombre = (string)datos.Lector["Nombre"];
+                    marca.Descripcion = (string)datos.Lector["Descripcion"];
+                    marca.Estado = (bool)datos.Lector["Estado"];
                 }
 
                 return marca;

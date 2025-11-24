@@ -8,9 +8,9 @@ namespace dominio
 {
     public class Marca
     {
-        public int idMarca { get; set; }
-        public string nombre { get; set; }
-        public string descripcion { get; set; }
-        public bool estado { get; set; }
+        public int IdMarca { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public bool Estado { get; set; }
     }
 }

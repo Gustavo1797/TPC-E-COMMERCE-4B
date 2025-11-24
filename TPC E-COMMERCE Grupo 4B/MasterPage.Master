@@ -138,6 +138,10 @@
 
                                     <a class="dropdown-item" href="ABMMarcas.aspx">ABM Marcas</a>
 
+                                    <a class="dropdown-item" href="ABMCategorias.aspx">ABM Categoria</a>
+
+                                    <a class="dropdown-item" href="AltaUsuario.aspx">ABM Usuarios</a>
+
                                     <a class="dropdown-item" >Comprar</a>
 
                                 </div>
