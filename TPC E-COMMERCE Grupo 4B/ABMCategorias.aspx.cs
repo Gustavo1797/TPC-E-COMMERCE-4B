@@ -29,6 +29,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             if (Session["IdCategoria"] == null)
             {
                 categoriaNegocio.Agregar(categoria);
+                loadGrid();
             }
             else
             {

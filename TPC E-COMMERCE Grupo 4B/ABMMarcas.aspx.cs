@@ -29,7 +29,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             if (Session["IdMarca"] == null) 
             {
                 marcaNegocio.Agregar(marca);
-                //if (marcaNegocio.Agregar(marca)) loadGrid();
+                loadGrid();
             } 
             else 
             {

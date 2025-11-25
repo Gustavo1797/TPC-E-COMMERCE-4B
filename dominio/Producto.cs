@@ -22,6 +22,7 @@ namespace dominio
         public Marca Marca { get; set; }
         public Proveedor Proveedor { get; set; }
         public decimal Peso { get; set; }
+        public string Pais { get; set; }
         public bool Estado { get; set; }
         public List<Imagen> ListImagen { get; set; }
 

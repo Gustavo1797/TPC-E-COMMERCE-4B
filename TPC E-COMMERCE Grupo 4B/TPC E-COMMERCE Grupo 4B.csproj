@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ABMCategorias.aspx" />
+    <Content Include="ABMItem.aspx" />
     <Content Include="ABMMarcas.aspx" />
     <Content Include="AdminDashboard.aspx" />
     <Content Include="AltaCliente.aspx" />
@@ -87,6 +88,13 @@
     </Compile>
     <Compile Include="ABMCategorias.aspx.designer.cs">
       <DependentUpon>ABMCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ABMItem.aspx.cs">
+      <DependentUpon>ABMItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMItem.aspx.designer.cs">
+      <DependentUpon>ABMItem.aspx</DependentUpon>
     </Compile>
     <Compile Include="ABMMarcas.aspx.cs">
       <DependentUpon>ABMMarcas.aspx</DependentUpon>

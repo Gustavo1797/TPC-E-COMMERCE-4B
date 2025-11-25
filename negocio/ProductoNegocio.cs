@@ -1,5 +1,6 @@
 ﻿using dominio;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.IdMarca,it.IdProveedor,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
+                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.IdMarca,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
                     " from ITEM it, IMAGEN E, MARCA M, CATEGORIA C" +
                     " WHERE it.IdProducto = e.IdProducto" +
                     " AND it.IdCategoria = c.IdCategoria" +
@@ -117,6 +118,40 @@ namespace negocio
                 
 
                 return producto;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public int Agregar(Producto nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            int IdProducto = 0;
+
+            try
+            {
+                string consulta = "Insert into Item(Nombre, Descripcion, Precio, Stock, IdCategoria, IdMarca, Peso, PaisOrigen, Estado) " +
+                    " values(@Nombre, @Descripcion, @Precio, @Stock, @IdCategoria, @IdMarca, @Peso, @PaisOrigen, @Estado) " +
+                    " SELECT SCOPE_IDENTITY();";
+
+                datos.setearConsulta(consulta);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Descripcion", nuevo.Descripcion);
+                datos.setearParametro("@Precio", nuevo.Precio);
+                datos.setearParametro("@Stock", nuevo.Stock);
+                datos.setearParametro("@IdCategoria", nuevo.Categoria.IdCategoria);
+                datos.setearParametro("@IdMarca", nuevo.Marca.IdMarca);
+                datos.setearParametro("@Peso", nuevo.Peso);
+                datos.setearParametro("@PaisOrigen", nuevo.Pais);
+                datos.setearParametro("@Estado", nuevo.Estado);                
+                return datos.ejecutarReturn();
 
             }
             catch (Exception ex)
