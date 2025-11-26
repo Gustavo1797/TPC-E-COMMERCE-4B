@@ -136,7 +136,19 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Default.aspx");
+            List<ItemCarrito> carrito = ObtenerCarrito();
+
+            int cantidadTotal = 0;
+            decimal precioUnitario = 0;
+
+            foreach (ItemCarrito item in carrito)
+            {
+                cantidadTotal += item.Cantidad;
+                precioUnitario += item.Producto.Precio;
+            }
+
+            // Enviar los datos al checkout
+            Response.Redirect("PantallaPago.aspx?cantidad=" + cantidadTotal + "&total=" + precioUnitario);
         }
     }
 }
