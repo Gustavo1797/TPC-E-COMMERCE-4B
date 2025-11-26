@@ -85,6 +85,8 @@
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
     <Content Include="PantallaPago.aspx" />
+    <Content Include="AltaModObj.aspx" />
+    <Content Include="ListaItem.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ABMCategorias.aspx.cs">
@@ -185,6 +187,20 @@
     </Compile>
     <Compile Include="PantallaPago.aspx.designer.cs">
       <DependentUpon>PantallaPago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AltaModObj.aspx.cs">
+      <DependentUpon>AltaModObj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AltaModObj.aspx.designer.cs">
+      <DependentUpon>AltaModObj.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaItem.aspx.cs">
+      <DependentUpon>ListaItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaItem.aspx.designer.cs">
+      <DependentUpon>ListaItem.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

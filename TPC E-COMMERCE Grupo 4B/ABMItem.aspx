@@ -7,23 +7,25 @@
 
         <h2 class="mb-4">Administración de Productos</h2>
 
+    <asp:Label ID="lblProductoStatus" runat="server" CssClass="text-danger small mt-2"></asp:Label>
+
     <div class="row">
         <!-- COLUMNA IZQUIERDA: FORMULARIO DE DATOS DEL PRODUCTO -->
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
-                    <asp:Label ID="lblTituloCard" runat="server" Text="Alta de Producto"></asp:Label>
+                    <asp:Label ID="sTituloCard" runat="server" Text="Alta de Producto"></asp:Label>
                 </div>
                 <div class="card-body">                    
 
                     <!-- Nombre y Descripción -->
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Ej: Nombre del producto"></asp:TextBox>
+                        <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Ej: Nombre del producto" OnTextChanged="borrarMensajeStatus"></asp:TextBox>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Descripción</label>
-                        <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" placeholder="Detalle técnico y características..."></asp:TextBox>
+                        <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" placeholder="Detalle técnico y características..." OnTextChanged="borrarMensajeStatus"></asp:TextBox>
                     </div>
 
                     <!-- Precio y Stock (en línea) -->
@@ -31,11 +33,11 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Precio ($)</label>
                             <!-- TextMode="Number" es útil para forzar la entrada numérica -->
-                            <asp:TextBox ID="txtPrecio" runat="server" TextMode="Number" CssClass="form-control" placeholder="0.00"></asp:TextBox>
+                            <asp:TextBox ID="txtPrecio" runat="server" TextMode="Number" CssClass="form-control" placeholder="0.00" OnTextChanged="borrarMensajeStatus"></asp:TextBox>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Stock</label>
-                            <asp:TextBox ID="txtStock" runat="server" TextMode="Number" CssClass="form-control" placeholder="0"></asp:TextBox>
+                            <asp:TextBox ID="txtStock" runat="server" TextMode="Number" CssClass="form-control" placeholder="0" OnTextChanged="borrarMensajeStatus"></asp:TextBox>
                         </div>
                     </div>
                     
@@ -59,11 +61,11 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Peso (kg)</label>
-                            <asp:TextBox ID="txtPeso" runat="server" CssClass="form-control" placeholder="0.00"></asp:TextBox>
+                            <asp:TextBox ID="txtPeso" runat="server" CssClass="form-control" placeholder="0.00" OnTextChanged="borrarMensajeStatus"></asp:TextBox>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">País de Origen</label>
-                            <asp:TextBox ID="txtPaisOrigen" runat="server" CssClass="form-control" placeholder="Ej: Argentina"></asp:TextBox>
+                            <asp:TextBox ID="txtPaisOrigen" runat="server" CssClass="form-control" placeholder="Ej: Argentina" OnTextChanged="borrarMensajeStatus"></asp:TextBox>
                         </div>
                     </div>
 

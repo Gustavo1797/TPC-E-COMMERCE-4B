@@ -34,17 +34,32 @@
                                 $ <%= prd.Precio.ToString("N2") %>
                             </p>
 
+                            <% if(negocio.Seguridad.sesionPerfilAdmin(Session["usuario"])){ %>
+                            
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="ABMItem.aspx?prd=<%= prd.IdProducto %>"
+                                   class="btn btn-primary btn-sm">
+                                    Modificar producto
+                                </a>
+                            </div>
+
+                            <% } else { %>
+                            
                             <div class="mt-auto d-flex gap-2">
                                 <a href="ItemSeleccionado.aspx?id=<%= prd.IdProducto %>"
                                    class="btn btn-outline-primary btn-sm">
                                     Ver detalle
                                 </a>
-
+                            
                                 <a href="Carrito.aspx?add=<%= prd.IdProducto %>"
                                    class="btn btn-primary btn-sm">
                                     Agregar al carrito
                                 </a>
                             </div>
+
+                            <% } %>
+
+                            
                         </div>
                     </div>
                 </div>
