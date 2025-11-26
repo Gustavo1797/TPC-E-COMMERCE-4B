@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -43,6 +44,7 @@ namespace negocio
                         prdAct.Descripcion = (string)datos.Lector["Descripcion"];
                         prdAct.Precio = (decimal)datos.Lector["Precio"];
                         prdAct.Stock = (int)datos.Lector["Stock"];
+                        prdAct.Estado = (bool)datos.Lector["Estado"];
                         prdAct.Categoria = new Categoria();
                         prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                         prdAct.Categoria.Nombre = (string)datos.Lector["cNombre"];
@@ -107,6 +109,7 @@ namespace negocio
                         prdAct.Descripcion = (string)datos.Lector["Descripcion"];
                         prdAct.Precio = (decimal)datos.Lector["Precio"];
                         prdAct.Stock = (int)datos.Lector["Stock"];
+                        prdAct.Estado = (bool)datos.Lector["Estado"];
                         prdAct.Categoria = new Categoria();
                         prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                         prdAct.Categoria.Nombre = (string)datos.Lector["cNombre"];

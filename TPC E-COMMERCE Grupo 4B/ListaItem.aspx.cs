@@ -31,7 +31,9 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         protected void dgvProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            int idProducto = (int)dgvProductos.SelectedDataKey.Value;
+            Session["idProducto"] = idProducto;
+            Response.Redirect("ABMItem.aspx", false);
         }
     }
 }

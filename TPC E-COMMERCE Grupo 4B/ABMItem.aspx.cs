@@ -37,11 +37,11 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 ddlMarca.DataValueField = "IdMarca";
                 ddlMarca.DataBind();
                 
-                if (Request.QueryString["prd"] != null)
+                if (!(Session["idProducto"] is null))
                 {
                     try
                     {
-                        int id = int.Parse(Request.QueryString["prd"]);
+                        int id = int.Parse(Session["idProducto"].ToString());
                         Producto producto = new Producto();
                         producto = productoNegocio.GetProducto(id);
 
@@ -86,13 +86,12 @@ namespace TPC_E_COMMERCE_Grupo_4B
             producto.Estado = chkEstado.Checked;
             
 
-            if (Request.QueryString["prd"] != null)
+            if (!(Session["idProducto"] is null))
             {
                 try
                 {
-                    producto.IdProducto = int.Parse(Request.QueryString["prd"]);
+                    producto.IdProducto = int.Parse(Session["idProducto"].ToString());
                     productoNegocio.Modificar(producto);
-
 
                     string msg = "El producto: " + producto.Nombre + ", se modifico correctamente";
                     Session.Add("msgOk", msg);
