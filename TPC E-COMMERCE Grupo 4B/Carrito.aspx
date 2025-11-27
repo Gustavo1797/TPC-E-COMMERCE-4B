@@ -38,8 +38,14 @@
 
             <div class="text-end">
                 <p class="mb-1 fw-semibold">
-                    Total: <asp:Label ID="lblTotal" runat="server" Text="$ 0,00"></asp:Label>
+                    Total:
+                    <asp:Label ID="lblTotal" runat="server" Text="$ 0,00"></asp:Label>
                 </p>
+
+                <asp:Label ID="lblError" runat="server"
+                    CssClass="text-danger fw-bold d-block mb-2"
+                    Visible="false"></asp:Label>
+
                 <asp:Button ID="btnConfirmar" runat="server"
                     Text="Confirmar compra"
                     CssClass="btn btn-primary"

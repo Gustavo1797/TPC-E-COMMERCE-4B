@@ -29,6 +29,11 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         private void AgregarAlCarrito(Producto prod)
         {
+            if (prod == null || prod.IdProducto <= 0 || prod.Precio <= 0)
+            {
+                return;
+            }
+
             List<ItemCarrito> carrito = ObtenerCarrito();
             ItemCarrito encontrado = null;
 
@@ -138,17 +143,24 @@ namespace TPC_E_COMMERCE_Grupo_4B
         {
             List<ItemCarrito> carrito = ObtenerCarrito();
 
+            if (carrito == null || carrito.Count == 0)
+            {
+                lblError.Text = "No hay productos en el carrito.";
+                lblError.Visible = true;
+                return;
+            }
+
             int cantidadTotal = 0;
-            decimal precioUnitario = 0;
+            decimal precioTotal = 0;
 
             foreach (ItemCarrito item in carrito)
             {
                 cantidadTotal += item.Cantidad;
-                precioUnitario += item.Producto.Precio;
+                precioTotal += (item.Producto.Precio * item.Cantidad);
             }
 
             // Enviar los datos al checkout
-            Response.Redirect("PantallaPago.aspx?cantidad=" + cantidadTotal + "&total=" + precioUnitario);
+            Response.Redirect("PantallaPago.aspx?cantidad=" + cantidadTotal + "&total=" + precioTotal);
         }
     }
 }

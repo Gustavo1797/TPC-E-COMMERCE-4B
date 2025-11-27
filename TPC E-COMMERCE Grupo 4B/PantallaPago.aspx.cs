@@ -37,8 +37,8 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 {
                     new {
                         title = "Muñeco.store",
-                        quantity = int.Parse(lblCantidad.Text),
-                        unit_price = decimal.Parse(lblTotal.Text)
+                        quantity = 1,
+                        unit_price = Convert.ToDecimal(Request.QueryString["total"])
                     }
                 },
                 back_urls = new
