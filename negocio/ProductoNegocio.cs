@@ -26,7 +26,7 @@ namespace negocio
                     " INNER JOIN MARCA M on it.IdMarca = m.IdMarca " +
                     " INNER JOIN CATEGORIA C on it.IdCategoria = c.IdCategoria " +
                     " LEFT JOIN IMAGEN e on it.IdProducto = e.IdProducto order by it.IdProducto";
-                
+
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
 
@@ -61,7 +61,7 @@ namespace negocio
                         auxImagen.IdArticulo = (int)datos.Lector["IdProducto"];
                         auxImagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
                         prdAct.ListImagen.Add(auxImagen);
-                    }                    
+                    }
                 }
 
                 if (idPrdAct != -1) lista.Add(prdAct);
@@ -148,15 +148,15 @@ namespace negocio
 
             try
             {
-                datos.setearStoreProcedure("SP_GET_ITEM");
-                /*
-                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.Nombre as cNombre,it.IdMarca,it.Nombre as mNombre,it.IdProveedor,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl  " +
+                //datos.setearStoreProcedure("SP_GET_ITEM");
+
+                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.Nombre as cNombre,it.IdMarca,it.Nombre as mNombre,it.IdProveedor,it.Peso, it.PaisOrigen, it.Estado,e.IdImagen,e.ImagenUrl  " +
                     " from ITEM it, IMAGEN E, MARCA M, CATEGORIA C" +
                     " WHERE it.IdProducto = e.IdProducto" +
                     " AND it.IdCategoria = c.IdCategoria" +
                     " AND it.IdMarca = m.IdMarca" +
                     " AND it.IdProducto = @Id");
-                */
+
                 datos.setearParametro("@Id", IdProducto);
                 datos.ejecutarLectura();
 
@@ -171,13 +171,21 @@ namespace negocio
                         producto.Precio = (decimal)datos.Lector["Precio"];
                         producto.Stock = (int)datos.Lector["Stock"];
                         producto.Marca = new Marca();
-                        producto.Marca.IdMarca = (int)datos.Lector["IdMar"];
+                        producto.Marca.IdMarca = (int)datos.Lector["IdMarca"];
                         producto.Marca.Nombre = (string)datos.Lector["mNombre"];
                         producto.Categoria = new Categoria();
-                        producto.Categoria.IdCategoria = (int)datos.Lector["IdCat"];
+                        producto.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                         producto.Categoria.Nombre = (string)datos.Lector["cNombre"];
                         producto.Peso = (decimal)datos.Lector["Peso"];
-                        producto.Pais = (string)datos.Lector["PaisOrigen"];
+                        if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("PaisOrigen")))
+                        {
+                            producto.Pais = (string)datos.Lector["PaisOrigen"];
+                        }
+                        else
+                        {
+                            producto.Pais = "Sin especificar";
+                        }
+
                         producto.Estado = (bool)datos.Lector["Estado"];
                     }
                     Imagen auxImagen = new Imagen();
@@ -187,10 +195,7 @@ namespace negocio
                     producto.ListImagen.Add(auxImagen);
                 }
 
-                
-
                 return producto;
-
             }
             catch (Exception ex)
             {
@@ -222,7 +227,7 @@ namespace negocio
                 datos.setearParametro("@IdMarca", nuevo.Marca.IdMarca);
                 datos.setearParametro("@Peso", nuevo.Peso);
                 datos.setearParametro("@PaisOrigen", nuevo.Pais);
-                datos.setearParametro("@Estado", nuevo.Estado);                
+                datos.setearParametro("@Estado", nuevo.Estado);
                 return datos.ejecutarReturn();
 
             }
@@ -238,13 +243,13 @@ namespace negocio
 
         public void Modificar(Producto modificado)
         {
-            AccesoDatos datos = new AccesoDatos();    
+            AccesoDatos datos = new AccesoDatos();
 
             try
             {
                 string consulta = "update Item set Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock," +
-                    "IdCategoria = @IdCategoria, IdMarca = @IdMarca , Peso = @Peso , PaisOrigen = @PaisOrigen , Estado = @Estado where IdProducto = @IdProducto";             
-                
+                    "IdCategoria = @IdCategoria, IdMarca = @IdMarca , Peso = @Peso , PaisOrigen = @PaisOrigen , Estado = @Estado where IdProducto = @IdProducto";
+
 
                 datos.setearConsulta(consulta);
                 datos.setearParametro("@IdProducto", modificado.IdProducto);
