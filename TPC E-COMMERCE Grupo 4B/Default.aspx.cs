@@ -17,7 +17,17 @@ namespace TPC_E_COMMERCE_Grupo_4B
             if (!IsPostBack)
             {
 
-                listProductos = productoNegocio.Listar();
+                List<Producto> listProductosAux = productoNegocio.Listar();
+                listProductos = new List<Producto>();
+                
+                foreach (Producto prd in listProductosAux)
+                {
+                    if (prd.Estado == true) 
+                    {                         
+                        listProductos.Add(prd);
+                    }
+                }
+
                 Session["listaProductos"] = listProductos;
 
             }
