@@ -1,51 +1,74 @@
-﻿<div id="productos">
-    <div class="row">
+﻿<%@ Page Language="C#" AutoEventWireup="true"
+    MaintainScrollPositionOnPostback="true"
+    MasterPageFile="~/MasterPage.master"
+    CodeBehind="Default.aspx.cs"
+    Inherits="TPC_E_COMMERCE_Grupo_4B.WebForm1" %>
 
-        <% if (listProductos != null && listProductos.Count > 0)
-        {
-            foreach (dominio.Producto prd in listProductos)
-            { %>
+<asp:Content ID="TitleContent" ContentPlaceHolderID="TitlePlaceHolder" runat="server">
+    Inicio
+</asp:Content>
 
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
+<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
 
-                        <img src="<%= prd.ListImagen[0].ImagenUrl %>"
-                             class="card-img-top"
-                             alt="<%= prd.Nombre %>" />
+    <h1 class="h3 mb-3">Bienvenido a Muñeco.store</h1>
+    <p class="text-muted mb-4">Descubrí nuestros productos.</p>
 
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title"><%= prd.Nombre %></h5>
-                            <p class="fw-bold mb-2 text-primary">
-                                $ <%= prd.Precio.ToString("N2") %>
-                            </p>
-
-                            <div class="mt-auto d-flex gap-2">
-                                <a href="Default.aspx?id=<%= prd.IdProducto %>"
-                                   class="btn btn-outline-primary btn-sm">
-                                   Ver detalle
-                                </a>
-
-                                <a href="Carrito.aspx?add=<%= prd.IdProducto %>"
-                                   class="btn btn-primary btn-sm mt-auto">
-                                   Agregar al carrito
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>  <!-- ✔️ Cierre correcto -->
-
-        <%  }
-        }
-        else
-        { %>
-
-            <div class="col-12">
-                <p class="text-muted">No hay productos para mostrar.</p>
+    <asp:Panel ID="panelDetalle" runat="server" CssClass="card p-3 mb-4" Visible="false">
+        <div class="d-flex gap-3">
+            <asp:Image ID="imgDetalle" runat="server" Width="180" Height="180" CssClass="rounded" />
+            <div>
+                <asp:Label ID="lblNombre" runat="server" CssClass="fw-bold fs-5"></asp:Label><br />
+                <asp:Label ID="lblDescripcion" runat="server" CssClass="text-muted small"></asp:Label>
+                <br />
+                <asp:Label ID="lblMarca" runat="server"></asp:Label><br />
+                <asp:Label ID="lblCategoria" runat="server"></asp:Label><br />
+                <asp:Label ID="lblPrecio" runat="server" CssClass="text-primary"></asp:Label><br />
             </div>
+        </div>
+    </asp:Panel>
 
-        <% } %>
+    <asp:Label Text="Filtro" runat="server" />
+    <asp:TextBox runat="server" ID="txtFiltro" CssClass="Form-Control" AutoPostBack="True" OnTextChanged="filtro_TextChanged" />
+    <div id="productos">
+        <div class="row">
 
-    </div>
-</div>
+            <% if (listProductos != null && listProductos.Count > 0)
+                {
+                    foreach (dominio.Producto prd in listProductos)
+                    { %>
 
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+
+                    <img src="<%= prd.ListImagen[0].ImagenUrl %>"
+                        class="card-img-top"
+                        alt="<%= prd.Nombre %>" />
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title"><%= prd.Nombre %></h5>
+                        <p class="fw-bold mb-2 text-primary">$ <%= prd.Precio.ToString("N2") %></p>
+
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="Default.aspx?id=<%= prd.IdProducto %>"
+                                class="btn btn-outline-primary btn-sm">Ver detalle
+                            </a>
+
+                            <a href="Carrito.aspx?add=<%= prd.IdProducto %>"
+                                class="btn btn-primary btn-sm mt-auto">Agregar al carrito</a>
+                        </div>
+                    </div>
+                </div>
+
+                <% }
+                    }
+                    else
+                    { %>
+
+                <div class="col-12">
+                    <p class="text-muted">No hay productos para mostrar.</p>
+                </div>
+
+                <% } %>
+            </div>
+        </div>
+</asp:Content>

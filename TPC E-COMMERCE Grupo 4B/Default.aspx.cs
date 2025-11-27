@@ -13,19 +13,26 @@ namespace TPC_E_COMMERCE_Grupo_4B
         protected void Page_Load(object sender, EventArgs e)
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();
-            listProductos = productoNegocio.Listar();
 
-            if (!IsPostBack) 
+            if (!IsPostBack)
             {
-                if (Request.QueryString["Id"] != null) 
+
+                listProductos = productoNegocio.Listar();
+                Session["listaProductos"] = listProductos;
+
+                if (Request.QueryString["Id"] != null)
                 {
                     int id = int.Parse(Request.QueryString["id"]);
                     mostrarDetalle(id);
                 }
             }
+            else
+            {
+                listProductos = (List<Producto>)Session["listaProductos"];
+            }
         }
 
-        private void mostrarDetalle(int id) 
+        private void mostrarDetalle(int id)
         {
             ProductoNegocio negocio = new ProductoNegocio();
             Producto prod = negocio.GetProducto(id);
@@ -42,5 +49,13 @@ namespace TPC_E_COMMERCE_Grupo_4B
             panelDetalle.Visible = true;
         }
 
+        protected void filtro_TextChanged(object sender, EventArgs e)
+        {
+            List<Producto> listaOriginal = (List<Producto>)Session["listaProductos"];
+
+            listProductos = listaOriginal.FindAll(x => x.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+
+            DataBind();
+        }
     }
 }
