@@ -21,11 +21,12 @@ namespace negocio
 
             try
             {
-                string consulta = "select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,c.Nombre as cNombre,it.IdMarca,m.Nombre as mNombre,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
+                string consulta = "select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.PaisOrigen,it.IdCategoria,c.Nombre as cNombre,it.IdMarca,m.Nombre as mNombre,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
                     " from ITEM it " +
                     " INNER JOIN MARCA M on it.IdMarca = m.IdMarca " +
                     " INNER JOIN CATEGORIA C on it.IdCategoria = c.IdCategoria " +
-                    " LEFT JOIN IMAGEN e on it.IdProducto = e.IdProducto order by it.IdProducto";
+                    " LEFT JOIN IMAGEN e on it.IdProducto = e.IdProducto " +
+                    " order by it.IdProducto";
 
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
@@ -45,12 +46,25 @@ namespace negocio
                         prdAct.Precio = (decimal)datos.Lector["Precio"];
                         prdAct.Stock = (int)datos.Lector["Stock"];
                         prdAct.Estado = (bool)datos.Lector["Estado"];
+                        prdAct.Peso = (decimal)datos.Lector["Peso"];
+
+                        if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("PaisOrigen")))
+                        {
+                            prdAct.Pais = (string)datos.Lector["PaisOrigen"];
+                        }
+                        else
+                        {
+                            prdAct.Pais = "Sin especificar";
+                        }
+
                         prdAct.Categoria = new Categoria();
                         prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                         prdAct.Categoria.Nombre = (string)datos.Lector["cNombre"];
+                        
                         prdAct.Marca = new Marca();
                         prdAct.Marca.IdMarca = (int)datos.Lector["IdMarca"];
                         prdAct.Marca.Nombre = (string)datos.Lector["mNombre"];
+                        
                         prdAct.ListImagen = new List<Imagen>();
                     }
 
@@ -88,7 +102,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,c.Nombre as cNombre,it.IdMarca,m.Nombre as mNombre,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
+                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.PaisOrigen,c.Nombre as cNombre,it.IdMarca,m.Nombre as mNombre,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
                     " from ITEM it, IMAGEN E, MARCA M, CATEGORIA C" +
                     " WHERE it.IdProducto = e.IdProducto" +
                     " AND it.IdCategoria = c.IdCategoria" +
@@ -110,9 +124,21 @@ namespace negocio
                         prdAct.Precio = (decimal)datos.Lector["Precio"];
                         prdAct.Stock = (int)datos.Lector["Stock"];
                         prdAct.Estado = (bool)datos.Lector["Estado"];
+                        prdAct.Peso = (decimal)datos.Lector["Peso"];
+
+                        if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("PaisOrigen")))
+                        {
+                            prdAct.Pais = (string)datos.Lector["PaisOrigen"];
+                        }
+                        else
+                        {
+                            prdAct.Pais = "Sin especificar";
+                        }
+
                         prdAct.Categoria = new Categoria();
                         prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                         prdAct.Categoria.Nombre = (string)datos.Lector["cNombre"];
+
                         prdAct.Marca = new Marca();
                         prdAct.Marca.IdMarca = (int)datos.Lector["IdMarca"];
                         prdAct.Marca.Nombre = (string)datos.Lector["mNombre"];
@@ -148,15 +174,7 @@ namespace negocio
 
             try
             {
-                //datos.setearStoreProcedure("SP_GET_ITEM");
-
-                datos.setearConsulta("select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.IdCategoria,it.Nombre as cNombre,it.IdMarca,it.Nombre as mNombre,it.IdProveedor,it.Peso, it.PaisOrigen, it.Estado,e.IdImagen,e.ImagenUrl  " +
-                    " from ITEM it, IMAGEN E, MARCA M, CATEGORIA C" +
-                    " WHERE it.IdProducto = e.IdProducto" +
-                    " AND it.IdCategoria = c.IdCategoria" +
-                    " AND it.IdMarca = m.IdMarca" +
-                    " AND it.IdProducto = @Id");
-
+                datos.setearStoreProcedure("SP_GET_ITEM");
                 datos.setearParametro("@Id", IdProducto);
                 datos.ejecutarLectura();
 
@@ -165,18 +183,23 @@ namespace negocio
                     idNuevoPRD = (int)datos.Lector["IdProducto"];
                     if (idPrdAct != idNuevoPRD)
                     {
+                        idPrdAct = (int)datos.Lector["IdProducto"];
                         producto.IdProducto = (int)datos.Lector["IdProducto"];
                         producto.Nombre = (string)datos.Lector["Nombre"];
                         producto.Descripcion = (string)datos.Lector["Descripcion"];
                         producto.Precio = (decimal)datos.Lector["Precio"];
                         producto.Stock = (int)datos.Lector["Stock"];
-                        producto.Marca = new Marca();
-                        producto.Marca.IdMarca = (int)datos.Lector["IdMarca"];
-                        producto.Marca.Nombre = (string)datos.Lector["mNombre"];
-                        producto.Categoria = new Categoria();
-                        producto.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
-                        producto.Categoria.Nombre = (string)datos.Lector["cNombre"];
+                        producto.Estado = (bool)datos.Lector["Estado"];
                         producto.Peso = (decimal)datos.Lector["Peso"];
+
+                        producto.Marca = new Marca();
+                        producto.Marca.IdMarca = (int)datos.Lector["IdMar"];
+                        producto.Marca.Nombre = (string)datos.Lector["mNombre"];
+
+                        producto.Categoria = new Categoria();
+                        producto.Categoria.IdCategoria = (int)datos.Lector["IdCat"];
+                        producto.Categoria.Nombre = (string)datos.Lector["cNombre"];
+
                         if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("PaisOrigen")))
                         {
                             producto.Pais = (string)datos.Lector["PaisOrigen"];
@@ -186,13 +209,19 @@ namespace negocio
                             producto.Pais = "Sin especificar";
                         }
 
-                        producto.Estado = (bool)datos.Lector["Estado"];
+                        producto.ListImagen = new List<Imagen>();
                     }
-                    Imagen auxImagen = new Imagen();
-                    auxImagen.ID = (int)datos.Lector["IdImagen"];
-                    auxImagen.IdArticulo = (int)datos.Lector["IdProducto"];
-                    auxImagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
-                    producto.ListImagen.Add(auxImagen);
+
+                    if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("IdImagen")))
+                    {
+                        Imagen auxImagen = new Imagen();
+                        auxImagen.ID = (int)datos.Lector["IdImagen"];
+                        auxImagen.IdArticulo = (int)datos.Lector["IdProducto"];
+                        auxImagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                        auxImagen.Estado = (bool)datos.Lector["EstImg"];
+                        producto.ListImagen.Add(auxImagen);
+                    }
+
                 }
 
                 return producto;
@@ -210,7 +239,6 @@ namespace negocio
         public int Agregar(Producto nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
-            int IdProducto = 0;
 
             try
             {

@@ -18,7 +18,7 @@
             CssClass="table table-striped table-hover table-bordered align-middle"
             
             AllowPaging="True" 
-            PageSize="5" 
+            PageSize="15" 
             OnPageIndexChanging="dgvProductos_PageIndexChanging"
             
             DataKeyNames="IdProducto" 

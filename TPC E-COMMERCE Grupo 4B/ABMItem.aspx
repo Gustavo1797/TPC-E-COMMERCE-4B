@@ -119,10 +119,15 @@
                          <asp:GridView ID="dgvImagenes" runat="server" 
                             AutoGenerateColumns="False" 
                             ShowHeaderWhenEmpty="False"
+                            DataKeyNames="Id"
+                            OnSelectedIndexChanged="dgvImagenes_SelectedIndexChanged"
+                            OnRowDeleting="dgvImagenes_DeleteUrlImage"
                             CssClass="table table-sm table-bordered table-hover">
                             
-                            <Columns>                                                             
+                            <Columns>  
+                                <asp:CommandField ShowSelectButton="True" SelectText="📋" ControlStyle-CssClass="btn btn-sm btn-info" HeaderText="Pegar URL"/>
                                 <asp:BoundField HeaderText="URL Imagen" DataField="ImagenUrl" />
+                                <asp:CommandField ShowDeleteButton="True" DeleteText="❌" ControlStyle-CssClass="btn btn-sm btn-danger" HeaderText="Borrar"/>
                             </Columns>
 
                         </asp:GridView>

@@ -15,19 +15,16 @@ BEGIN
             ,c.Nombre as cNombre
             ,M.IdMarca as IdMar
             ,M.Nombre as mNombre
-            ,it.IdProveedor
             ,it.Peso
             ,it.Estado
+            ,it.PaisOrigen
             ,IM.IdImagen
             ,IM.ImagenUrl
-        FROM ITEM it,
-            IMAGEN IM, 
-            MARCA M, 
-            CATEGORIA C 
-        WHERE it.IdProducto = IM.IdProducto
-        AND it.IdCategoria = c.IdCategoria
-        AND it.IdMarca = m.IdMarca
-        AND it.IdProducto = @ID;
+        FROM ITEM it
+        INNER JOIN MARCA M on it.IdMarca = m.IdMarca
+        INNER JOIN CATEGORIA C on it.IdCategoria = c.IdCategoria
+        LEFT JOIN IMAGEN IM on it.IdProducto = IM.IdProducto
+        WHERE it.IdProducto = @ID
     
     END TRY
     BEGIN CATCH
@@ -36,3 +33,4 @@ BEGIN
        
     END CATCH
 END
+

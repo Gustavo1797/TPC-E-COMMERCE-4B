@@ -34,5 +34,27 @@ namespace negocio
             }
 
         }
+
+        public void Eliminar(Imagen imagen)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = "Delete Imagen where IdImagen = @IdImagen";
+
+                datos.setearConsulta(consulta);
+                datos.setearParametro("@IdImagen", imagen.ID);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

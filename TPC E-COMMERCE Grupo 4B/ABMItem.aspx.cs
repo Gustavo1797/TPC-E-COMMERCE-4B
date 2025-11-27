@@ -59,6 +59,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                         ddlCategoria.SelectedIndex = producto.Categoria.IdCategoria;
                         ddlMarca.SelectedIndex = producto.Marca.IdMarca;
                         chkEstado.Checked = producto.Estado;
+                        Session["listImagen"] = producto.ListImagen;
                         cargarGridView(producto.ListImagen);
                     }
                     catch (Exception ex)
@@ -93,6 +94,24 @@ namespace TPC_E_COMMERCE_Grupo_4B
                     producto.IdProducto = int.Parse(Session["idProducto"].ToString());
                     productoNegocio.Modificar(producto);
 
+                    List<Imagen> listaUrlImagenes = obtenerListaUrlImagenes();
+                    if (listaUrlImagenes.Count > 0) 
+                    {
+                        ImagenNegocio imagenNegocio = new ImagenNegocio();
+                        foreach (Imagen imagen in listaUrlImagenes) 
+                        {
+                            if (imagen.ID == 0) 
+                            {
+                                imagen.IdArticulo = producto.IdProducto;
+                                imagenNegocio.Agregar(imagen);
+                            } 
+                            else if (imagen.Estado == false && imagen.ID > 0) 
+                            { 
+                                imagenNegocio.Eliminar(imagen);
+                            }
+                        }
+                    }
+
                     string msg = "El producto: " + producto.Nombre + ", se modifico correctamente";
                     Session.Add("msgOk", msg);
                     Response.Redirect("AltaModObj.aspx", false);
@@ -117,10 +136,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 {
                     ImagenNegocio imagenNegocio = new ImagenNegocio();
                     List<Imagen> listImagen = new List<Imagen>();
-                    if (Session["listImagen"] != null)
-                    {
-                        listImagen = (List<Imagen>)Session["listImagen"];
-                    }
+                    listImagen = obtenerListaUrlImagenes();                    
 
                     foreach (Imagen imagen in listImagen)
                     {
@@ -128,6 +144,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                         imagen.Estado = true;
                         imagenNegocio.Agregar(imagen);
                     }
+
                     string msg = "El producto: " + producto.Nombre + ", se dio de alta correctamente";
                     Session.Add("msgOk", msg);
                     Response.Redirect("AltaModObj.aspx", false);
@@ -142,6 +159,14 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         }
 
+        
+        protected void borrarMensajeStatus(object sender, EventArgs e)
+        {
+            lblProductoStatus.Visible = false;
+            lblProductoStatus.Text = string.Empty;
+        }
+        
+
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiarPantalla();
@@ -155,7 +180,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             txtPrecio.Text = string.Empty;
             txtStock.Text = string.Empty;
             txtPeso.Text = string.Empty;
-            txtPaisOrigen.Text = string.Empty;            
+            txtPaisOrigen.Text = string.Empty;
             lblImagenStatus.Text = string.Empty;
 
             txtNombre.Attributes["placeholder"] = "Ej: Nombre del producto";
@@ -171,64 +196,30 @@ namespace TPC_E_COMMERCE_Grupo_4B
             cargarGridView(new List<Imagen>());
         }
 
-        protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
+        /*
+         Cargar grid de imagenes
+         */
+        private void cargarGridView(List<Imagen> list)
         {
-            string urlIngresada = txtUrlImagen.Text;
-            imgPreview.ImageUrl = urlIngresada;
-        }
-
-        protected void btnAgregarImagen_Click(object sender, EventArgs e)
-        {            
-            string imageUrl = txtUrlImagen.Text;
-            lblImagenStatus.Text = "";
-
-            if (string.IsNullOrEmpty(imageUrl)) 
+            try
             {
-                lblImagenStatus.Text = "Debe ingresar una URL.";
-                return;
+                lblImagenStatus.Text = string.Empty;
+                txtUrlImagen.Text = string.Empty;
+                txtUrlImagen.Attributes["placeholder"] = "https://ejemplo.com/imagen.jpg";
+                dgvImagenes.DataSource = list;
+                dgvImagenes.DataBind();
             }
-
-
-            Imagen imageAux = new Imagen();
-            imageAux.ImagenUrl = imageUrl;
-            List<Imagen> listImagen = new List<Imagen>();
-
-            if (Session["listImagen"] != null)
+            catch (Exception ex)
             {
-                listImagen = (List<Imagen>)Session["listImagen"];                
-            } 
-            
-            if (existeLaImagen(listImagen, imageUrl))
-            {
-                lblImagenStatus.Text = "Esta URL ya existe en la lista.";
-                return;
-            }
-
-            if (EsImagenValidaRemota(imageUrl))
-            {
-                listImagen.Add(imageAux);
-                Session["listImagen"] = listImagen;
-                cargarGridView(listImagen);
-            }
-            else
-            {
-                lblImagenStatus.Text = "No es una imagen valida o fallo la conexion.";
-                cargarGridView(listImagen);
-                return;
+                Session.Add("error",ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
-        private bool existeLaImagen(List<Imagen> listImagen, string imageUrl)
-        {
-            foreach (Imagen imagen in listImagen)
-            {
-                if (imagen.ImagenUrl.Equals(imageUrl)) 
-                { 
-                    return true;
-                }
-            }
-            return false;
-        }
+
+        /*
+        Manejo de Imagenes 
+         */
 
         private bool EsImagenValidaRemota(string url)
         {
@@ -238,7 +229,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 request.Method = "HEAD";
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {                    
+                {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         string contentType = response.ContentType.ToLower();
@@ -248,24 +239,129 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 }
             }
             catch (Exception)
-            {                
+            {
                 return false;
             }
         }
 
-        private void cargarGridView(List<Imagen> list) 
+        private bool existeLaImagen(List<Imagen> listImagen, string imageUrl)
         {
-            lblImagenStatus.Text = string.Empty;
-            txtUrlImagen.Text = string.Empty;
-            txtUrlImagen.Attributes["placeholder"] = "https://ejemplo.com/imagen.jpg";
-            dgvImagenes.DataSource = list;
-            dgvImagenes.DataBind();            
+            foreach (Imagen imagen in listImagen)
+            {
+                if (imagen.ImagenUrl.Equals(imageUrl))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        protected void borrarMensajeStatus(object sender, EventArgs e)
+        private List<Imagen> obtenerListaUrlImagenes()
         {
-            lblProductoStatus.Visible = false;
-            lblProductoStatus.Text = string.Empty;
+            if (Session["listImagen"] != null)
+            {
+                return (List<Imagen>)Session["listImagen"];
+            }
+            return new List<Imagen>();
+        }
+
+        protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
+        {
+            string urlIngresada = txtUrlImagen.Text;
+            imgPreview.ImageUrl = urlIngresada;
+        }
+
+        protected void btnAgregarImagen_Click(object sender, EventArgs e)
+        {
+            string imageUrl = txtUrlImagen.Text;
+            lblImagenStatus.Text = "";
+            try
+            {
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    lblImagenStatus.Text = "Debe ingresar una URL.";
+                    return;
+                }
+
+                Imagen imageAux = new Imagen();
+                imageAux.ID = 0;
+                imageAux.Estado = true;
+                imageAux.ImagenUrl = imageUrl;
+                List<Imagen> listImagen = obtenerListaUrlImagenes();
+
+                if (existeLaImagen(listImagen, imageUrl))
+                {
+                    lblImagenStatus.Text = "Esta URL ya existe en la lista.";
+                    return;
+                }
+
+                if (EsImagenValidaRemota(imageUrl))
+                {
+                    listImagen.Add(imageAux);
+                    Session["listImagen"] = listImagen;
+                    cargarGridView(listImagenEstadoTrue());
+                }
+                else
+                {
+                    lblImagenStatus.Text = "No es una imagen valida o fallo la conexion.";
+                    cargarGridView(listImagenEstadoTrue());
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }        
+        }
+
+        protected void dgvImagenes_DeleteUrlImage(object sender, GridViewDeleteEventArgs e)
+        {
+            e.Cancel = true;
+            int indiceFila = e.RowIndex;
+            List<Imagen> listImagen = obtenerListaUrlImagenes();
+
+            if (listImagen.Count > 0)
+            {
+                Imagen imagenPorBorrar = listImagen[indiceFila];
+                if (imagenPorBorrar.ID > 0)
+                {
+                    imagenPorBorrar.Estado = false;
+                }
+                else
+                {
+                    listImagen.RemoveAt(indiceFila);
+                }
+                Session["listImagen"] = listImagen;               
+
+                cargarGridView(listImagenEstadoTrue());
+            }
+            else
+            {
+                cargarGridView(new List<Imagen>());
+            }
+        }
+
+        protected void dgvImagenes_SelectedIndexChanged (object sender, EventArgs e) 
+        {
+            int indiceFila = dgvImagenes.SelectedIndex;
+            List<Imagen> listImagen = listImagenEstadoTrue();
+            imgPreview.ImageUrl = listImagen[indiceFila].ImagenUrl;
+        }
+
+        private List<Imagen> listImagenEstadoTrue() 
+        {
+            List<Imagen> listImagen = obtenerListaUrlImagenes();
+            List<Imagen> listImagenAux = new List<Imagen>();
+            foreach (Imagen imagen in listImagen)
+            {
+                int id = imagen.ID;
+                if (imagen.Estado)
+                {
+                    listImagenAux.Add(imagen);
+                }
+            }
+            return listImagenAux;
         }
     }
 }
