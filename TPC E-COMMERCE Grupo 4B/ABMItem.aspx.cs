@@ -22,10 +22,30 @@ namespace TPC_E_COMMERCE_Grupo_4B
             if (!IsPostBack) 
             {
                 List<Marca> listMarcas = new List<Marca>();
-                List<Categoria> listCategorias = new List<Categoria>();
+                List<Marca> listMarcasAux = new List<Marca>();
 
-                listMarcas = marcaNegocio.Listar();
-                listCategorias = categoriaNegocio.Listar();
+                List<Categoria> listCategorias = new List<Categoria>();                
+                List<Categoria> listCategoriasAux = new List<Categoria>();
+
+                listMarcasAux = marcaNegocio.Listar();
+                listCategoriasAux = categoriaNegocio.Listar();
+
+                foreach (Marca marca in listMarcasAux)
+                {
+                    if (marca.Estado == true)
+                    {
+                        listMarcas.Add(marca);
+                    }
+                }
+
+                foreach (Categoria categoria in listCategoriasAux)
+                {
+                    if (categoria.Estado == true)
+                    {
+                        listCategorias.Add(categoria);
+                    }
+                }
+                
 
                 ddlCategoria.DataSource = listCategorias;
                 ddlCategoria.DataTextField = "Nombre";

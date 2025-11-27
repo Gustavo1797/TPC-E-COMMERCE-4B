@@ -3,6 +3,7 @@ using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -24,7 +25,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             Categoria categoria = new Categoria();
             categoria.Nombre = txtNombre.Text;
             categoria.Descripcion = txtDescripcion.Text;
-            categoria.Estado = true;
+            categoria.Estado = chkEstado.Checked; ;
 
             if (Session["IdCategoria"] == null)
             {
@@ -35,6 +36,10 @@ namespace TPC_E_COMMERCE_Grupo_4B
             {
                 categoria.IdCategoria = (int)Session["IdCategoria"];
                 categoriaNegocio.Modificar(categoria);
+
+                string msg = "La categoria: " + categoria.Nombre + ", se modifico correctamente";
+                Session.Add("msgOk", msg);
+                Response.Redirect("AltaModObj.aspx", false);
             }
 
             Session["IdCategoria"] = null;
@@ -75,10 +80,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             Categoria categoria = categoriaNegocio.ObtenerCategoria(idCategoria);
             txtNombre.Text = categoria.Nombre;
             txtDescripcion.Text = categoria.Descripcion;
-            if (categoria.Estado)
-            { chkEstado.Checked = true; }
-            else
-            { chkEstado.Checked = false; }
+            chkEstado.Checked = categoria.Estado;
             Session["IdCategoria"] = idCategoria;
 
         }

@@ -24,7 +24,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             Marca marca = new Marca();
             marca.Nombre = txtNombre.Text;
             marca.Descripcion = txtDescripcion.Text;
-            marca.Estado = true;
+            marca.Estado = chkEstado.Checked;
 
             if (Session["IdMarca"] == null) 
             {
@@ -34,7 +34,11 @@ namespace TPC_E_COMMERCE_Grupo_4B
             else 
             {
                 marca.IdMarca = (int)Session["IdMarca"];
-                marcaNegocio.Modificar(marca);                
+                marcaNegocio.Modificar(marca);
+
+                string msg = "La marca: " + marca.Nombre + ", se modifico correctamente";
+                Session.Add("msgOk", msg);
+                Response.Redirect("AltaModObj.aspx", false);
             }
 
             Session["IdMarca"] = null;
@@ -75,10 +79,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             Marca marca = marcaNegocio.GetMarca(idMarca);
             txtNombre.Text = marca.Nombre;
             txtDescripcion.Text = marca.Descripcion;
-            if (marca.Estado) 
-            { chkEstado.Checked = true; }
-            else 
-            { chkEstado.Checked = false; }
+            chkEstado.Checked = marca.Estado;
             Session["IdMarca"] = idMarca;
 
         }
