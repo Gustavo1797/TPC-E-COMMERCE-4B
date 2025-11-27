@@ -37,6 +37,11 @@ namespace TPC_E_COMMERCE_Grupo_4B
                         txtEmail.Text = "";
                         txtPassword.Text = "";
                         txtConfirmPassword.Text = "";
+
+                        string msg = "El usuario admin: " + usuario.Email + ", se dio de alta correctamente";
+                        Session.Add("msgOk", msg);
+                        Response.Redirect("AltaModObj.aspx", false);
+                        return;
                     }
                     else 
                     {

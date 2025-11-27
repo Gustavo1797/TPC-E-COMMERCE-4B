@@ -19,10 +19,10 @@ namespace TPC_E_COMMERCE_Grupo_4B
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             Usuario usuario = new Usuario();
-            Proveedor proveedor = new Proveedor();
-            Cliente cliente = new Cliente();
+            //Proveedor proveedor = new Proveedor();
+            //Cliente cliente = new Cliente();
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-            ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
+            //ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
 
             try
             {
@@ -31,9 +31,16 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
                 if (usuarioNegocio.Login(usuario))
                 {
-                    proveedor = proveedorNegocio.GetProveedor(usuario.IdUsuario);
                     Session.Add("usuario", usuario);
-                    Response.Redirect("Default.aspx", false);
+                    if (usuario.Rol == TipoUsuario.USUARIOS) 
+                    {                        
+                        Response.Redirect("Default.aspx", false);
+                    } 
+                    else 
+                    {                        
+                        Response.Redirect("ListaItem.aspx", false);
+                    }
+                    //proveedor = proveedorNegocio.GetProveedor(usuario.IdUsuario);
                 }
                 else
                 {

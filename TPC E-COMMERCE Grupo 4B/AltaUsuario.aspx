@@ -11,7 +11,14 @@
                     
                     <div class="card shadow-sm rounded-3">
                         <div class="card-header p-4">
-                            <h3 class="mb-0 text-center">Crear Cuenta</h3>
+                             <%if (negocio.Seguridad.sesionPerfilAdmin(Session["usuario"]))
+                               { %>  
+                                    <h3 class="mb-0 text-center">Crear Cuenta Admin</h3>                                
+                            <% }
+                               else
+                               { %>
+                                    <h3 class="mb-0 text-center">Crear Cuenta</h3>
+                             <%} %>                            
                         </div>
                         <div class="card-body p-4">
                             
