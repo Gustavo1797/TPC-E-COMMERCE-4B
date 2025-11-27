@@ -64,7 +64,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                     }
                     catch (Exception ex)
                     {
-                        Session.Add("error", ex.ToString());
+                        Session.Add("Error", ex.ToString());
                         Response.Redirect("Error.aspx", false);
                     }                    
                 }                 
@@ -119,7 +119,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 }
                 catch (Exception ex)
                 {
-                    Session.Add("error", ex.ToString());
+                    Session.Add("Error", ex.ToString());
                     Response.Redirect("Error.aspx", false);
                     return;
                 }
@@ -151,7 +151,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 }
                 catch (Exception ex)
                 {
-                    Session.Add("error", ex.ToString());
+                    Session.Add("Error", ex.ToString());
                     Response.Redirect("Error.aspx", false);
                 }
 
@@ -192,8 +192,16 @@ namespace TPC_E_COMMERCE_Grupo_4B
             txtPeso.Attributes["placeholder"] = "0.00";
             txtPaisOrigen.Attributes["placeholder"] = "Ej: Argentina";
             chkEstado.Checked = true;
-            Session["listImagen"] = null;
+            limpiarSession();
             cargarGridView(new List<Imagen>());
+        }
+
+        private void limpiarSession() 
+        {
+            Session["listImagen"] = null;
+            Session["msgOk"] = null;
+            Session["idProducto"] = null;
+            Session["Error"] = null;
         }
 
         /*
@@ -211,7 +219,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             }
             catch (Exception ex)
             {
-                Session.Add("error",ex);
+                Session.Add("Error", ex);
                 Response.Redirect("Error.aspx", false);
             }
         }
@@ -310,7 +318,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex);
+                Session.Add("Error", ex);
                 Response.Redirect("Error.aspx", false);
             }        
         }

@@ -17,13 +17,21 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 if (!(Session["msgOk"] is null))
                 {
                     lblMensajeConfirmacion.Text = Session["msgOk"].ToString();
-                    Session["msgOk"] = null;
+                    limpiarSession();
                 }
                 else
                 {
                     lblMensajeConfirmacion.Text = "Se creo o actualizo el objeto correctamente.";
                 }
             }
+        }
+
+        private void limpiarSession()
+        {
+            Session["listImagen"] = null;
+            Session["msgOk"] = null;
+            Session["idProducto"] = null;
+            Session["Error"] = null;
         }
     }
 }
