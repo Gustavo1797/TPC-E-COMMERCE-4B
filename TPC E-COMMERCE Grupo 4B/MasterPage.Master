@@ -1,4 +1,4 @@
-﻿    <%@ Master Language="C#" AutoEventWireup="true"
+﻿<%@ Master Language="C#" AutoEventWireup="true"
     CodeBehind="MasterPage.master.cs"
     Inherits="TPC_E_COMMERCE_Grupo_4B.MasterPage" %>
 
@@ -12,13 +12,13 @@
         <asp:ContentPlaceHolder ID="TitlePlaceHolder" runat="server" />
     </title>
 
-  
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-          crossorigin="anonymous" />
 
-   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous" />
+
+
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
     <style>
@@ -43,114 +43,113 @@
             vertical-align: middle;
         }
 
-        
+
         html {
             scroll-behavior: smooth;
         }
 
-        
+
         .dropdown:hover .dropdown-menu {
             display: block;
             margin-top: 0;
         }
 
-        
+
         .carousel-control-prev,
-        .carousel-control-next {            
-            background-color: rgba(0, 0, 0, 0.4); 
-            width: 15%; 
-            transition: background-color 0.3s ease; 
+        .carousel-control-next {
+            background-color: rgba(0, 0, 0, 0.4);
+            width: 15%;
+            transition: background-color 0.3s ease;
         }
-        
-        
-        .carousel-control-prev:hover,
-        .carousel-control-next:hover {
-            background-color: rgba(0, 0, 0, 0.6); 
-        }
+
+
+            .carousel-control-prev:hover,
+            .carousel-control-next:hover {
+                background-color: rgba(0, 0, 0, 0.6);
+            }
     </style>
 
-    
+
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
 
 <body>
     <form id="form1" runat="server" class="page-wrapper">
 
-        
+
         <div class="bg-light border-bottom small">
             <div class="container d-flex justify-content-between align-items-center py-1">
                 <span class="text-muted">Envíos a todo el país • Cambios fáciles</span>
 
                 <div class="d-flex gap-3">
-                    
+
                     <a href="PaginaLogin.aspx" class="text-decoration-none">Mi cuenta</a>
                     <a href="#" class="text-decoration-none">Ayuda</a>
                 </div>
             </div>
         </div>
 
-      
+
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <div class="container">
-                
+
                 <a class="navbar-brand d-flex align-items-center" href="Default.aspx">
                     <span class="material-symbols-outlined me-1">local_mall</span>
                     <span class="fw-bold">Muñeco<span class="text-primary">.store</span></span>
                 </a>
 
-               
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#mainNavbar" aria-controls="mainNavbar"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    data-bs-target="#mainNavbar" aria-controls="mainNavbar"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-               <!-- Contenedor lado Izquierdo-->
+                <!-- Contenedor lado Izquierdo-->
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                   <%if (negocio.Seguridad.sesionPerfilAdmin(Session["usuario"]))
-                       { %>     
+                        <%if (negocio.Seguridad.sesionPerfilAdmin(Session["usuario"]))
+                            { %>
 
                         <li class="nav-item">
                             <a class="nav-link" href="AdminDashboard.aspx">Dashboard</a>
                         </li>
 
-                        <li class="nav-item dropdown">                           
-                            <a class="nav-link dropdown-toggle" href="#">
-                                Productos
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#">Productos
                             </a>
-                        
+
                             <div class="dropdown-menu">
-                        
+
                                 <a class="dropdown-item" href="ListaItem.aspx">Lista de productos </a>
-                        
+
                                 <a class="dropdown-item" href="ABMItem.aspx">Alta producto</a>
-                        
+
                             </div>
                         </li>
-                        
-                        <li class="nav-item">                            
-                            <a class="nav-link" href="ABMMarcas.aspx"> Marcas </a>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="ABMMarcas.aspx">Marcas </a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="ABMCategorias.aspx">Categorías</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="AltaUsuario.aspx">Usuarios</a>
                         </li>
 
-                   <%}
-                       else
-                       { %>
-                    
+                        <%}
+                            else
+                            { %>
+
                         <li class="nav-item">
                             <a class="nav-link" href="Default.aspx">Inicio</a>
                         </li>
 
                         <li class="nav-item">
-                            
+
                             <a class="nav-link" href="Default.aspx#productos">
                                 <span class="material-symbols-outlined me-1">storefront</span>
                                 Productos
@@ -162,59 +161,65 @@
 
                     <!-- Contenedor lado derecho-->
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        
+
                         <!-- Boton ingresar -->
                         <%if (!negocio.Seguridad.sesionActiva(Session["usuario"]))
-                          { %>
-                                <li class="nav-item">                           
-                                    <a class="nav-link" href="PaginaLogin.aspx">
-                                        <span class="material-symbols-outlined me-1">person</span>
-                                        Ingresar
-                                    </a>    
-                                </li>
+                            { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="PaginaLogin.aspx">
+                                <span class="material-symbols-outlined me-1">person</span>
+                                Ingresar
+                            </a>
+                        </li>
                         <%}
-                          else
-                          {
+                            else
+                            {
                                 if (!(negocio.Seguridad.sesionPerfilAdmin(Session["usuario"])))
                                 {%>
-                                    <!-- Despegable Perfil -->
-                                    <li class="nav-item dropdown">                           
-                                        <a class="nav-link dropdown-toggle" href="#">
-                                            Perfil
-                                        </a>
+                        <!-- Despegable Perfil -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#">Perfil
+                            </a>
 
-                                        <div class="dropdown-menu">
+                            <div class="dropdown-menu">
 
-                                            <a class="dropdown-item" href="#">Perfil </a>
+                                <a class="dropdown-item" href="AltaCliente.aspx">Perfil </a>
 
-                                            <a class="dropdown-item" >Comprar</a>
+                                <a class="dropdown-item" href="#">Comprar</a>
 
-                                        </div>
-                                    </li>
+                            </div>
+                        </li>
 
-                                    <!-- Boton Carrito -->
-                                    <li class="nav-item">
-                                     
-                                        <a class="nav-link" href="Carrito.aspx">
-                                            <span class="material-symbols-outlined me-1">shopping_cart</span>
-                                            Carrito
-                                        </a>
-                                    </li>
+                        <!-- Imagen de Perfil -->
+                        <li class="nav-item d-flex align-items-center">
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                alt="Perfil"
+                                class="rounded-circle border"
+                                style="width: 40px; height: 40px; object-fit: cover; margin-left: 10px; margin-right: 5px;">
+                        </li>
+
+                        <!-- Boton Carrito -->
+                        <li class="nav-item">
+
+                            <a class="nav-link" href="Carrito.aspx">
+                                <span class="material-symbols-outlined me-1">shopping_cart</span>
+                                Carrito
+                            </a>
+                        </li>
 
                         <%      }
-                          } %>
-                        
+                            } %>
+
 
                         <!-- Boton Salir -->
-                         <%if (negocio.Seguridad.sesionActiva(Session["usuario"]))
-                             { %>
+                        <%if (negocio.Seguridad.sesionActiva(Session["usuario"]))
+                            { %>
                         <li class="nav-item">
                             <asp:LinkButton class="nav-link" OnClick="btnSalir_Click" runat="server">
                                 Salir
                             </asp:LinkButton>
                         </li>
                         <%  } %>
-
                     </ul>
                 </div>
             </div>
@@ -223,17 +228,17 @@
 
         <main class="flex-grow-1">
             <div class="container my-4">
-                
+
                 <div class="alert alert-light border mb-4" role="alert">
                     <span class="material-symbols-outlined me-2 text-primary">sparkles</span>
                     Bienvenido a <strong>Muñeco.store</strong> — descubrí productos con envío a todo el país.
                 </div>
 
-                
+
                 <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
             </div>
         </main>
-        
+
         <!-- Pie de pagina -->
         <footer class="bg-light border-top py-4 mt-auto">
             <div class="container small">
@@ -249,7 +254,7 @@
                     <div class="col-md-4 mb-3 mb-md-0">
                         <h6 class="fw-semibold">Tienda</h6>
                         <ul class="list-unstyled mb-0">
-                           
+
                             <li><a class="text-decoration-none" href="Default.aspx#productos">Productos</a></li>
                             <li><a class="text-decoration-none" href="Marcas.aspx">Marcas</a></li>
                             <li><a class="text-decoration-none" href="Categorias.aspx">Categorías</a></li>
@@ -259,7 +264,7 @@
                     <div class="col-md-4">
                         <h6 class="fw-semibold">Cuenta</h6>
                         <ul class="list-unstyled mb-0">
-                            
+
                             <li><a class="text-decoration-none" href="PaginaLogin.aspx">Ingresar</a></li>
                             <li><a class="text-decoration-none" href="Registro.aspx">Registrarse</a></li>
                             <li><a class="text-decoration-none" href="#">Mis pedidos</a></li>
@@ -276,9 +281,9 @@
 
     </form>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
 </html>
