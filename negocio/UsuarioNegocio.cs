@@ -39,21 +39,26 @@ namespace negocio
             }
         }
 
-        public int Modificar(Usuario usuario)
+        public bool Modificar(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string consulta = "update Usuarios (Password, Nombre, ImagenUrl) " +
-                          "values(@Password, @Nombre, @ImagenUrl);";
+                string consulta = "update Usuarios " +
+                            " SET Email = @Email, Password = @Password, Nombre = @Nombre, ImagenUrl = @ImagenUrl " +
+                            " where IdUsuario = @IdUsuario ";
 
                 datos.setearConsulta(consulta);
 
+                datos.setearParametro("@Email", usuario.Email);
                 datos.setearParametro("@Password",  usuario.Password);
                 datos.setearParametro("@Nombre",    usuario.Nombre);
                 datos.setearParametro("@ImagenUrl", usuario.ImagenUrl);
+                datos.setearParametro("@IdUsuario", usuario.IdUsuario);
 
-                return datos.ejecutarReturn();
+                datos.ejecutarAccion();
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -71,7 +76,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("select IdUsuario,Rol from usuarios where Email = @email and Password = @pass");
+                datos.setearConsulta("select IdUsuario,Rol,ImagenUrl,Nombre from usuarios where Email = @email and Password = @pass");
                 datos.setearParametro("@email",usuario.Email);
                 datos.setearParametro("@pass",usuario.Password);
                 datos.ejecutarLectura();
@@ -79,6 +84,12 @@ namespace negocio
                 { 
                     usuario.IdUsuario = (int)datos.Lector["IdUsuario"];
                     usuario.Rol = (TipoUsuario)datos.Lector["Rol"];
+
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        usuario.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+
+                    if (!(datos.Lector["Nombre"] is DBNull))
+                        usuario.Nombre = (string)datos.Lector["Nombre"];
                     return true;
                 }
                 return false;
@@ -86,6 +97,10 @@ namespace negocio
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
            

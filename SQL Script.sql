@@ -5,6 +5,7 @@ go
 use TPC_ECOMMERCE_4B_DB
 go
 
+
 DROP TABLE IF EXISTS Imagen;
 go
 DROP TABLE IF EXISTS Item;    
@@ -71,7 +72,6 @@ go
 
 Create Table Item(
     IdProducto int not null primary key identity(1, 1),
-    IdProveedor int not null,
     Nombre varchar(255) not null,
     Descripcion varchar(1000) not null,
     Precio money not null,
@@ -83,8 +83,7 @@ Create Table Item(
     Estado bit not null,
     
     FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria),
-    FOREIGN KEY (IdMarca) REFERENCES Marca(IdMarca),
-    FOREIGN KEY (IdProveedor) REFERENCES Proveedores(IdProveedor)
+    FOREIGN KEY (IdMarca) REFERENCES Marca(IdMarca)
 )
 go
 
@@ -98,28 +97,26 @@ Create Table Imagen(
 )
 go
 
-Insert into Categoria(Nombre ,Descripcion, Estado)
-Values ('Celulares', 'Todos los celulares', 0);
+Insert into Usuarios(Email,             Password,   Rol,    Estado, FechaRegistro)
+Values (            'admin@admin.com',  'admin',    0,      1,      GETDATE())
 
 go
 
-Insert into Marca(Nombre, Descripcion, Estado)
-Values ('Samsung', 'Samsung', 0),
- ('Motorola', 'Motorola', 0),
- ('Xiaomi', 'Xiaomi', 0);
+Insert into Categoria(  Nombre ,        Descripcion,            Estado)
+Values (                'Celulares',    'Todos los celulares',  0);
 
 go
 
-Insert into Usuarios(Email, Password, Rol, Estado, FechaRegistro)
-Values ('admin@admin.com', 'admin', 0, 1, GETDATE())
+Insert into Marca(  Nombre,     Descripcion,    Estado)
+Values (            'Samsung',  'Samsung',      1),
+ (                  'Motorola', 'Motorola',     1),
+ (                  'Xiaomi',   'Xiaomi',       1);
 
-update Usuarios set Email = 'admin@admin.com' where IdUsuario = 1
-select * from Usuarios
 
 go
 
 
-ALTER PROCEDURE dbo.SP_GET_ITEM(
+CREATE PROCEDURE dbo.SP_GET_ITEM(
     @ID INT
 )
 AS

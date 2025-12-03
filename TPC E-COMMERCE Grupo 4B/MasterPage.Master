@@ -192,10 +192,11 @@
 
                         <!-- Imagen de Perfil -->
                         <li class="nav-item d-flex align-items-center">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                                alt="Perfil"
+                            <asp:Image ImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                runat="server"
+                                ID="imagenPerfil"
                                 class="rounded-circle border"
-                                style="width: 40px; height: 40px; object-fit: cover; margin-left: 10px; margin-right: 5px;">
+                                Style="width: 40px; height: 40px; object-fit:contain; margin-left: 10px; margin-right: 5px; "/>
                         </li>
 
                         <!-- Boton Carrito -->
