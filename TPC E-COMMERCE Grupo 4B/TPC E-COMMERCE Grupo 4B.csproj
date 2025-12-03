@@ -80,6 +80,7 @@
     <Content Include="AltaUsuario.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="ItemSeleccionado.aspx" />
     <Content Include="PaginaLogin.aspx" />
     <Content Include="Web.config" />
@@ -151,6 +152,9 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ItemSeleccionado.aspx.cs">
       <DependentUpon>ItemSeleccionado.aspx</DependentUpon>

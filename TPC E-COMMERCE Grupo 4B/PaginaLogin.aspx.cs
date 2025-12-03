@@ -18,11 +18,18 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            Page.Validate();
+            if (!Page.IsValid)
+                return;
+
+            if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            {
+                Session.Add("error", "Debes completar ambos campos...");
+                Response.Redirect("Error.aspx");
+            }
+
             Usuario usuario = new Usuario();
-            //Proveedor proveedor = new Proveedor();
-            //Cliente cliente = new Cliente();
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-            //ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
 
             try
             {
@@ -40,7 +47,6 @@ namespace TPC_E_COMMERCE_Grupo_4B
                     {                        
                         Response.Redirect("ListaItem.aspx", false);
                     }
-                    //proveedor = proveedorNegocio.GetProveedor(usuario.IdUsuario);
                 }
                 else
                 {
@@ -49,6 +55,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 }
                 
             }
+            catch (System.Threading.ThreadAbortException ex) { }
             catch (Exception ex)
             {
                 Session.Add("error",ex.ToString());

@@ -12,7 +12,7 @@ namespace TPC_E_COMMERCE_Grupo_4B
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!(Page is PaginaLogin || Page is AltaUsuario || Page is WebForm1))
+            if (!(Page is PaginaLogin || Page is AltaUsuario || Page is WebForm1 || Page is Error))
             {
                 if (!Seguridad.sesionActiva(Session["usuario"]))
                 Response.Redirect("PaginaLogin.aspx", false);
