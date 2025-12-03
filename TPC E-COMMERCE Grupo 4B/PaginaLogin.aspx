@@ -75,8 +75,7 @@
 
                 <div class="mb-3">
                     <label for="txtPassword" class="form-label">Contraseña</label>
-                    <asp:TextBox ID="txtPassword" runat="server"
-                        RegularExpre
+                    <asp:TextBox ID="txtPassword" runat="server"                        
                         ClientIDMode="Static"
                         CssClass="form-control"
                         TextMode="Password"

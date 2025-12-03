@@ -178,7 +178,8 @@
                                 {%>
                         <!-- Despegable Perfil -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#">Perfil
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <asp:Label ID="lblUser" runat="server" Text="Perfil"></asp:Label>
                             </a>
 
                             <div class="dropdown-menu">
@@ -196,7 +197,7 @@
                                 runat="server"
                                 ID="imagenPerfil"
                                 class="rounded-circle border"
-                                Style="width: 40px; height: 40px; object-fit:contain; margin-left: 10px; margin-right: 5px; "/>
+                                Style="width: 40px; height: 40px; object-fit: contain; margin-left: 10px; margin-right: 5px;" />
                         </li>
 
                         <!-- Boton Carrito -->

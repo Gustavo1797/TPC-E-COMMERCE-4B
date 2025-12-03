@@ -25,7 +25,9 @@ namespace TPC_E_COMMERCE_Grupo_4B
             if(!(Seguridad.sesionPerfilAdmin((Usuario)Session["usuario"])) && Session["usuario"] != null)
             {
                 Usuario usuario = ((Usuario)Session["usuario"]);
-                if (!string.IsNullOrEmpty(usuario.ImagenUrl)) imagenPerfil.ImageUrl = "~/Images/" + usuario.ImagenUrl;
+                lblUser.Text = usuario.Email;
+                if (!string.IsNullOrEmpty(usuario.ImagenUrl)) 
+                    imagenPerfil.ImageUrl = "~/Images/" + usuario.ImagenUrl;
             }
 
         }

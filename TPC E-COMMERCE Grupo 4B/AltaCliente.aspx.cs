@@ -35,8 +35,10 @@ namespace TPC_E_COMMERCE_Grupo_4B
                     clienteNegocio.obtenerCliente(cliente);
                     if (cliente.IdCliente != 0)
                     {
-                        if (!(string.IsNullOrEmpty(cliente.Apellido))) txtApellido.Text = cliente.Apellido;
-                        if (cliente.FechaNacimiento is DBNull) txtFechaNacimiento.Text = cliente.FechaNacimiento.ToString("yyyy-MM-dd");
+                        if (!(string.IsNullOrEmpty(cliente.Apellido)))
+                            txtApellido.Text = cliente.Apellido;
+                        if (!(cliente.FechaNacimiento is DBNull)) 
+                            txtFechaNacimiento.Text = cliente.FechaNacimiento.ToString("yyyy-MM-dd");
                     }
                 }
             }
