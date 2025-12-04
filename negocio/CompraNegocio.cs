@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using dominio;
 
@@ -18,7 +19,13 @@ namespace negocio
 
             try
             {
-                string consulta = "select IdCompra, IdCliente, IdEstadoCompra, FechaCompra, Total from Compra order by IdCompra desc ";
+                string consulta = "select com.IdCompra, com.IdCliente, com.IdEstadoCompra, com.FechaCompra, com.Total, ec.Nombre, ec.Descripcion, us.Email " +
+                    " from Compra com " +
+                    " inner join EstadoCompra ec on ec.IdEstadoCompra = com.IdEstadoCompra " +
+                    " inner join Clientes cl on cl.IdCliente = com.IdCliente" +
+                    " inner join Usuarios us on us.IdUsuario = cl.IdUsuario " +
+                    " order by com.IdCompra desc";
+
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
 
@@ -26,10 +33,19 @@ namespace negocio
                 {
                     compra = new Compra();
                     compra.IdCompra = (int)datos.Lector["IdCompra"];
-                    compra.IdCliente = (int)datos.Lector["IdCliente"];
-                    compra.IdEstadoCompra = (int)datos.Lector["IdEstadoCompra"];
                     compra.FechaCompra = (DateTime)datos.Lector["FechaCompra"];
                     compra.Total = (decimal)datos.Lector["Total"];
+
+                    compra.Cliente = new Cliente();
+                    compra.Cliente.Usuario = new Usuario();
+                    compra.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
+                    compra.Cliente.Usuario.Email = (string)datos.Lector["Email"];
+
+                    compra.EstadoCompra = new EstadoCompra();
+                    compra.EstadoCompra.IdEstadoCompra = (int)datos.Lector["IdEstadoCompra"];
+                    compra.EstadoCompra.Nombre = (string)datos.Lector["Nombre"];
+                    compra.EstadoCompra.Descripcion = (string)datos.Lector["Descripcion"];
+
                     list.Add(compra);
                 }
 
@@ -52,8 +68,13 @@ namespace negocio
 
             try
             {
-                compra.IdEstadoCompra = 0;
-                string consulta = "select IdCompra, IdCliente, IdEstadoCompra, FechaCompra, Total from Compra where IdCompra = @IdCompra ";
+                compra.IdCompra = 0;
+                string consulta = "select com.IdCompra, com.IdCliente, com.IdEstadoCompra, com.FechaCompra, com.Total, ec.Nombre, ec.Descripcion, us.Email " +
+                    " from Compra com " +
+                    " inner join EstadoCompra ec on ec.IdEstadoCompra = com.IdEstadoCompra " +
+                    " inner join Clientes cl on cl.IdCliente = com.IdCliente" +
+                    " inner join Usuarios us on us.IdUsuario = cl.IdUsuario " +                    
+                    " where IdCompra = @IdCompra";
                 datos.setearConsulta(consulta);
                 datos.setearParametro("@IdCompra", IdCompra);
                 datos.ejecutarLectura();
@@ -62,10 +83,18 @@ namespace negocio
                 {
                     compra = new Compra();
                     compra.IdCompra = (int)datos.Lector["IdCompra"];
-                    compra.IdCliente = (int)datos.Lector["IdCliente"];
-                    compra.IdEstadoCompra = (int)datos.Lector["IdEstadoCompra"];
                     compra.FechaCompra = (DateTime)datos.Lector["FechaCompra"];
                     compra.Total = (decimal)datos.Lector["Total"];
+
+                    compra.Cliente = new Cliente();
+                    compra.Cliente.Usuario = new Usuario();
+                    compra.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
+                    compra.Cliente.Usuario.Email = (string)datos.Lector["Email"];
+
+                    compra.EstadoCompra = new EstadoCompra();
+                    compra.EstadoCompra.IdEstadoCompra = (int)datos.Lector["IdEstadoCompra"];
+                    compra.EstadoCompra.Nombre = (string)datos.Lector["Nombre"];
+                    compra.EstadoCompra.Descripcion = (string)datos.Lector["Descripcion"];
                 }
 
                 return compra;
@@ -89,8 +118,8 @@ namespace negocio
                     " values (@IdCliente ,@IdEstadoCompra ,@FechaCompra ,@Total) ";
                 datos.setearConsulta(consulta);
 
-                datos.setearParametro("@IdCliente", compra.IdCliente);
-                datos.setearParametro("@IdEstadoCompra", compra.IdEstadoCompra);
+                datos.setearParametro("@IdCliente", compra.Cliente.IdCliente);
+                datos.setearParametro("@IdEstadoCompra", compra.EstadoCompra.IdEstadoCompra);
                 datos.setearParametro("@FechaCompra", compra.FechaCompra);
                 datos.setearParametro("@Total", compra.Total);
                 datos.ejecutarAccion();
@@ -116,9 +145,9 @@ namespace negocio
                 string consulta = "update Compra " +
                     " Set IdEstadoCompra = @IdEstadoCompra " +
                     " where IdCompra = @IdCompra ";
-                datos.setearConsulta(consulta);
+                datos.setearConsulta(consulta);                
 
-                datos.setearParametro("@IdEstadoCompra", compra.IdEstadoCompra);
+                datos.setearParametro("@IdEstadoCompra", compra.EstadoCompra.IdEstadoCompra);
                 datos.setearParametro("@IdCompra", compra.IdCompra);
 
                 datos.ejecutarAccion();

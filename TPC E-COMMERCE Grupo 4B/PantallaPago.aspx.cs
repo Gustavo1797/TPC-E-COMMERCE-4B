@@ -159,8 +159,10 @@ namespace TPC_E_COMMERCE_Grupo_4B
                     Cliente cliente = (Cliente)Session["cliente"];
                     compra.Total = decimal.Parse(Request.QueryString["total"]);
                     compra.FechaCompra = DateTime.Now;
-                    compra.IdEstadoCompra = 1;
-                    compra.IdCliente = cliente.IdCliente;
+                    compra.EstadoCompra = new EstadoCompra();
+                    compra.EstadoCompra.IdEstadoCompra = 1;
+                    compra.Cliente = new Cliente();
+                    compra.Cliente.IdCliente = cliente.IdCliente;
                     bool compraOk = compraNegocio.Agregar(compra);
                     if (compraOk)
                     {

@@ -10,6 +10,7 @@ namespace dominio
     public class Cliente
     {
         public int IdCliente { get; set; }
+        public Usuario Usuario { get; set; }
         public int IdUsuario { get; set; }
         public string Apellido { get; set; }
         public DateTime FechaNacimiento { get; set; }

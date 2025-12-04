@@ -32,6 +32,8 @@ namespace TPC_E_COMMERCE_Grupo_4B
             Session["msgOk"] = null;
             Session["idProducto"] = null;
             Session["Error"] = null;
+            Session["idCompra"] = null;
+            Session["Carrito"] = null;
         }
     }
 }
