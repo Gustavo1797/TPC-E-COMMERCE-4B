@@ -19,7 +19,6 @@
             CssClass="table table-striped table-hover table-bordered align-middle"
             DataKeyNames="IdTarjeta"
             OnRowCommand="dgvTarjetas_RowCommand">
-            >
 
             <EmptyDataTemplate>
                 <div class="alert alert-info mt-2" role="alert">
@@ -41,17 +40,15 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:BoundField HeaderText="Modificar" DataField="Nombre" />
+                <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
 
-                <asp:TemplateField HeaderText="Compania" ItemStyle-HorizontalAlign="Center">
-                    <ItemTemplate>
-                        <asp:LinkButton ID="btnModificar" />
-                    </ItemTemplate>
-                </asp:TemplateField>
+                <asp:BoundField HeaderText="N° Serie" DataField="NumeroDeSerie" />
 
-                <asp:TemplateField HeaderText="Eliminar" ItemStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="Modificar" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:LinkButton ID="btnEliminar" />
+                        <asp:LinkButton ID="btnModificar" runat="server" Text="Modificar"
+                            CssClass="btn btn-sm btn-danger"
+                            CommandName="Modificar" CommandArgument='<%# Eval("IdTarjeta") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -62,29 +59,37 @@
 
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <asp:Label ID="lblTituloCard" runat="server" Text="Alta de Categoria"></asp:Label>
+            <asp:Label ID="lblTituloCard" runat="server" Text="Alta de tarjeta"></asp:Label>
         </div>
 
         <div class="card-body">
 
             <div class="mb-3">
                 <label for="txtNombre" class="form-label">Nombre</label>
-                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Ej: Mi Categoria"></asp:TextBox>
+                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Ej: Visa Debito Banco Nacion" />
+                <asp:RequiredFieldValidator ErrorMessage="Es necesario ingresar un nombre" ControlToValidate="txtNumeroSerie" runat="server" />
             </div>
 
             <div class="mb-3">
-                <label for="txtDescripcion" class="form-label">Descripción</label>
-                <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" placeholder="Ingresa una descripción..."></asp:TextBox>
-            </div>
-
-            <div class="mb-3">
-                <asp:CheckBox ID="chkEstado" runat="server" Text="Categoria Activa" Checked="true" CssClass="form-check-input" Enabled="false" />
+                <label for="txtNumeroSerie" class="form-label">N° Serie</label>
+                <asp:TextBox ID="txtNumeroSerie" runat="server" CssClass="form-control" placeholder="Ingrese solo los numeros de la tarjeta" />
+                <asp:RequiredFieldValidator 
+                    ErrorMessage="Es necesario que ingrese un numero de serie" 
+                    ControlToValidate="txtNumeroSerie" 
+                    runat="server" />
+                <asp:RegularExpressionValidator
+                    ErrorMessage="El número de serie debe ser unicamente numerico entre 15 a 16 dígitos."
+                    ControlToValidate="txtNumeroSerie"
+                    ValidationExpression="^\d{15,16}$"
+                    ForeColor="Red"
+                    Display="Dynamic"
+                    runat="server" />
             </div>
 
             <div class="d-grid gap-2">
-                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success" OnClick="btnClick" />
+                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success" OnClick="btnGuardar_Click" />
 
-                <a href="AdminDashboard.aspx" class="btn btn-link">Cancelar</a>
+                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" Visible="false" OnClick="btnEliminar_Click" />
             </div>
 
         </div>

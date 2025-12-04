@@ -10,8 +10,20 @@ namespace dominio
     {
         public int IdCliente { get; set; }
         public int IdTarjeta { get; set; }
-        public string Nombre { get; set; } 
+        public string Nombre { get; set; }
         public string NumeroDeSerie { get; set; }
+
+        public string ultimosCuatro
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(NumeroDeSerie) || NumeroDeSerie.Length < 4)
+                {
+                    return NumeroDeSerie;
+                }
+                return NumeroDeSerie.Substring(NumeroDeSerie.Length - 4);
+            }
+        }
         public string ImagenUrlTarj { get; set; }
     }
 }

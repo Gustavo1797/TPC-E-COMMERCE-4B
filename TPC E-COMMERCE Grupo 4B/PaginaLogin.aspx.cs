@@ -39,8 +39,17 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 if (usuarioNegocio.Login(usuario))
                 {
                     Session.Add("usuario", usuario);
+                    
                     if (usuario.Rol == TipoUsuario.USUARIOS) 
-                    {                        
+                    {
+                        ClienteNegocio clienteNegocio = new ClienteNegocio();
+                        Cliente cliente = new Cliente();
+                        cliente = clienteNegocio.obtenerCliente(usuario.IdUsuario);
+                        if (cliente.IdCliente != 0) 
+                        {
+                            Session.Add("cliente", cliente);
+                        }
+
                         Response.Redirect("Default.aspx", false);
                     } 
                     else 

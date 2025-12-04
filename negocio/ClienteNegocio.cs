@@ -66,14 +66,17 @@ namespace negocio
             }
         }
 
-        public bool obtenerCliente(Cliente cliente)
+        public Cliente obtenerCliente(int IdUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
+            Cliente cliente = new Cliente();
             try
             {
+                cliente.IdCliente = 0;
+
                 string consulta = "select IdCliente, Apellido, FechaNacimiento from Clientes where IdUsuario = @IdUsuario ";
                 datos.setearConsulta(consulta);
-                datos.setearParametro("@IdUsuario", cliente.IdUsuario);
+                datos.setearParametro("@IdUsuario", IdUsuario);
                 datos.ejecutarLectura();             
                 
 
@@ -86,12 +89,9 @@ namespace negocio
                     
                     if (!(datos.Lector["FechaNacimiento"] is DBNull))
                         cliente.FechaNacimiento = DateTime.Parse(datos.Lector["FechaNacimiento"].ToString());
-                    
-                    
-                    return true;
                 }
 
-                return false;
+                return cliente;
 
             }
             catch (Exception)

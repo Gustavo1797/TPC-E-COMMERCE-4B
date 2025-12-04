@@ -184,7 +184,9 @@
 
                             <div class="dropdown-menu">
 
-                                <a class="dropdown-item" href="AltaCliente.aspx">Perfil </a>
+                                <a class="dropdown-item" href="AltaCliente.aspx">Perfil </a> 
+
+                                <a class="dropdown-item" href="ABMTarjetas.aspx">Tarjetas </a>
 
                                 <a class="dropdown-item" href="#">Comprar</a>
 

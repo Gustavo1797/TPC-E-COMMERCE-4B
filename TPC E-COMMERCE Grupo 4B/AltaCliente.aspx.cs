@@ -29,10 +29,8 @@ namespace TPC_E_COMMERCE_Grupo_4B
                         imagenView.ImageUrl = "~/Images/" + usuario.ImagenUrl;
                     }
 
-                    Cliente cliente = new Cliente();
-                    cliente.IdUsuario = usuario.IdUsuario;
-                    cliente.IdCliente = 0;
-                    clienteNegocio.obtenerCliente(cliente);
+                    Cliente cliente = new Cliente();                    
+                    cliente = clienteNegocio.obtenerCliente(usuario.IdUsuario);
                     if (cliente.IdCliente != 0)
                     {
                         if (!(string.IsNullOrEmpty(cliente.Apellido)))
@@ -64,13 +62,13 @@ namespace TPC_E_COMMERCE_Grupo_4B
                 if (usuarioNegocio.Modificar(usuario)) 
                 {
                     ClienteNegocio clienteNegocio = new ClienteNegocio();
-                    Cliente cliente = new Cliente();
+                    Cliente cliente = new Cliente();                    
                     cliente.IdUsuario = usuario.IdUsuario;
-                    bool existeCliente = clienteNegocio.obtenerCliente(cliente);
+                    cliente = clienteNegocio.obtenerCliente(usuario.IdUsuario);
                     cliente.Apellido = txtApellido.Text;
                     cliente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
 
-                    if (existeCliente)
+                    if (cliente.IdCliente != 0)
                     {
                         clienteNegocio.Modificar(cliente);
                     }

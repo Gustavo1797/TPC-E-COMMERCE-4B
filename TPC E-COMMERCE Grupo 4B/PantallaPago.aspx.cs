@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
 using System.Text;
+using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 
 namespace TPC_E_COMMERCE_Grupo_4B
@@ -13,20 +17,34 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                lblCantidad.Text = Request.QueryString["cantidad"];
-                lblTotal.Text = Request.QueryString["total"];
 
+            if (!IsPostBack)
+            {   
+                lblCantidad.Text = Request.QueryString["cantidad"];
                 lblTotal.Text = decimal.Parse(Request.QueryString["total"])
                     .ToString("0");
+                
+                CargarTarjetas();
             }
         }
 
-        protected void btnPagar_Click(object sender, EventArgs e)
+        private void CargarTarjetas()
         {
-            string url = CrearPreferencia();
-            Response.Redirect(url);
+            Cliente cliente = new Cliente();
+            cliente = (Cliente)Session["cliente"];
+            ClienteTarjetaNegocio clienteTarjetaNegocio = new ClienteTarjetaNegocio();
+            List<ClienteTarjeta> listTarjetas = new List<ClienteTarjeta>();
+            listTarjetas = clienteTarjetaNegocio.listarClienteTarjeta(cliente.IdCliente);
+
+            if (listTarjetas.Count > 0)
+            {
+                rptTarjetas.DataSource = listTarjetas;
+                rptTarjetas.DataBind();
+            }
+            else
+            {
+                lblSinTarjetas.Visible = true;
+            }
         }
 
         private string CrearPreferencia()
@@ -65,6 +83,74 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
                 return resp.init_point;
             }
+        }
+
+        protected void MetodoPago_CheckedChanged(object sender, EventArgs e)
+        {
+            DesmarcarTodasLasTarjetasDelRepeater();
+        }
+
+        protected void rbTarjeta_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rbSeleccionado = (RadioButton)sender;
+            rbMercadoPago.Checked = false;
+            rbEfectivo.Checked = false;
+
+            foreach (RepeaterItem item in rptTarjetas.Items)
+            {
+                RadioButton rb = (RadioButton)item.FindControl("rbTarjeta");
+                if (rb != rbSeleccionado)
+                {
+                    rb.Checked = false;
+                }
+            }
+        }
+
+        private void DesmarcarTodasLasTarjetasDelRepeater()
+        {
+            foreach (RepeaterItem item in rptTarjetas.Items)
+            {
+                RadioButton rb = (RadioButton)item.FindControl("rbTarjeta");
+                if (rb != null) rb.Checked = false;
+            }
+        }
+
+        protected void btnPagar_Click(object sender, EventArgs e)
+        {
+            string metodoSeleccionado = "";
+            int idTarjetaSeleccionada = 0;
+
+            if (rbMercadoPago.Checked)
+            {
+                string url = CrearPreferencia();
+                Response.Redirect(url);
+            }
+            else if (rbEfectivo.Checked)
+            {
+
+            }
+            else
+            {
+                // Buscar si hay alguna tarjeta seleccionada en el repeater
+                foreach (RepeaterItem item in rptTarjetas.Items)
+                {
+                    RadioButton rb = (RadioButton)item.FindControl("rbTarjeta");
+                    if (rb.Checked)
+                    {
+                        HiddenField hfId = (HiddenField)item.FindControl("hfIdTarjeta");
+                        idTarjetaSeleccionada = int.Parse(hfId.Value);
+                        metodoSeleccionado = "TARJETA";
+                        break;
+                    }
+                }
+            }
+
+            if (metodoSeleccionado == "")
+            {
+                lblMensaje.Text = "Por favor, seleccioná un método de pago.";
+                return;
+            }
+
         }
     }
 }
