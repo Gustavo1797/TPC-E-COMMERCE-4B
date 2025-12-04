@@ -6,13 +6,13 @@ use TPC_ECOMMERCE_4B_DB
 go
 
 
+DROP TABLE IF EXISTS Compra;
+go
 DROP TABLE IF EXISTS ClienteTarjeta;
 go
 DROP TABLE IF EXISTS Imagen;
 go
 DROP TABLE IF EXISTS Item;    
-go
-DROP TABLE IF EXISTS Proveedores;
 go
 DROP TABLE IF EXISTS Clientes;
 go
@@ -22,6 +22,11 @@ DROP TABLE IF EXISTS Marca;
 go
 DROP TABLE IF EXISTS Categoria;
 go
+DROP TABLE IF EXISTS EstadoCompra;
+go
+
+
+
 
 
 Create Table Usuarios(
@@ -36,15 +41,6 @@ Create Table Usuarios(
 )
 go
 
-Create Table Proveedores(
-    IdProveedor int not null primary key identity(1, 1),
-    IdUsuario  int not null,
-    RazonSocial varchar(100) not null,
-    Cuit varchar(13) null,
-
-    FOREIGN KEY (IdUsuario) REFERENCES Usuarios(IdUsuario)
-)
-go
 
 Create Table Clientes(
     IdCliente int not null primary key identity(1, 1),
@@ -110,20 +106,42 @@ Create Table ClienteTarjeta(
 )
 go
 
+CREATE TABLE EstadoCompra (
+    IdEstadoCompra INT PRIMARY KEY IDENTITY(1,1), 
+    Nombre VARCHAR(50) NOT NULL UNIQUE,           
+    Descripcion VARCHAR(255) NULL                 
+)
+
+go
+
+INSERT INTO EstadoCompra (Nombre, Descripcion) VALUES
+('Pendiente De Entrega', 'El pedido se encuentra en almacen para ser entregado al cliente.'),
+('Pagado', 'El pago ha sido confirmado exitosamente.'),
+('Procesando', 'El pedido está siendo preparado en el almacén.'),
+('En Reparto', 'El pedido ha salido para ser entregado al cliente.'),
+('Entregado', 'El pedido ha sido entregado satisfactoriamente al cliente.'),
+('Cancelado', 'La orden fue cancelada por el cliente o el sistema.'),
+('Devuelto', 'El cliente ha iniciado un proceso de devolución.');
+
+go
+
+CREATE TABLE Compra (
+    
+    IdCompra INT PRIMARY KEY IDENTITY(1,1), 
+    IdCliente INT NOT NULL, 
+    IdEstadoCompra INT NOT NULL, 
+    FechaCompra DATETIME NOT NULL DEFAULT GETDATE(),
+    Total DECIMAL(10, 2) NOT NULL,    
+    
+    FOREIGN KEY (IdEstadoCompra) REFERENCES EstadoCompra (IdEstadoCompra),    
+    FOREIGN KEY (IdCliente)  REFERENCES Clientes (IdCliente)
+)
+
+go
+
+
 Insert into Usuarios(Email,             Password,   Rol,    Estado, FechaRegistro)
 Values (            'admin@admin.com',  'admin',    0,      1,      GETDATE())
-
-go
-
-Insert into Categoria(  Nombre ,        Descripcion,            Estado)
-Values (                'Celulares',    'Todos los celulares',  0);
-
-go
-
-Insert into Marca(  Nombre,     Descripcion,    Estado)
-Values (            'Samsung',  'Samsung',      1),
- (                  'Motorola', 'Motorola',     1),
- (                  'Xiaomi',   'Xiaomi',       1);
 
 
 go

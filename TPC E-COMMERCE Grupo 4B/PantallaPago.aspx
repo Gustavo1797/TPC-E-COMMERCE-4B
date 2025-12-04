@@ -50,6 +50,9 @@
 
         <div>
             <h2 class="mb-4">MEDIO DE PAGO</h2>
+
+            <asp:Label ID="Label1" runat="server" Text="Favor de seleccionar un medio de pago." />
+
             <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-3"></asp:Label>
 
             <div class="box">
@@ -101,9 +104,8 @@
             </div>
 
             <div class="box">
-                <h2>PAGO</h2>
-                <asp:Label ID="lblInfo" runat="server" Text="Presioná el botón para continuar al checkout." />
-                <asp:Button ID="btnPagar" runat="server" Text="Pagar con Mercado Pago" CssClass="btn btn-primary" OnClick="btnPagar_Click" />
+                <h2>PAGO</h2>                
+                <asp:Button ID="btnPagar" runat="server" Text="Realizar pago" CssClass="btn btn-primary" OnClick="btnPagar_Click" />
             </div>
 
         </div>

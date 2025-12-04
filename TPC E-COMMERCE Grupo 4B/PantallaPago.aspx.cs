@@ -19,11 +19,11 @@ namespace TPC_E_COMMERCE_Grupo_4B
         {
 
             if (!IsPostBack)
-            {   
+            {
                 lblCantidad.Text = Request.QueryString["cantidad"];
                 lblTotal.Text = decimal.Parse(Request.QueryString["total"])
                     .ToString("0");
-                
+
                 CargarTarjetas();
             }
         }
@@ -117,40 +117,70 @@ namespace TPC_E_COMMERCE_Grupo_4B
 
         protected void btnPagar_Click(object sender, EventArgs e)
         {
-            string metodoSeleccionado = "";
-            int idTarjetaSeleccionada = 0;
-
-            if (rbMercadoPago.Checked)
-            {
-                string url = CrearPreferencia();
-                Response.Redirect(url);
-            }
-            else if (rbEfectivo.Checked)
+            try
             {
 
-            }
-            else
-            {
-                // Buscar si hay alguna tarjeta seleccionada en el repeater
-                foreach (RepeaterItem item in rptTarjetas.Items)
+                bool check = false;
+                int idTarjetaSeleccionada = 0;
+
+                if (rbMercadoPago.Checked)
                 {
-                    RadioButton rb = (RadioButton)item.FindControl("rbTarjeta");
-                    if (rb.Checked)
+                    string url = CrearPreferencia();
+                    Response.Redirect(url);
+                }
+                else if (rbEfectivo.Checked)
+                {
+                    check = true;
+                }
+                else
+                {
+                    foreach (RepeaterItem item in rptTarjetas.Items)
                     {
-                        HiddenField hfId = (HiddenField)item.FindControl("hfIdTarjeta");
-                        idTarjetaSeleccionada = int.Parse(hfId.Value);
-                        metodoSeleccionado = "TARJETA";
-                        break;
+                        RadioButton rb = (RadioButton)item.FindControl("rbTarjeta");
+                        if (rb.Checked)
+                        {
+                            HiddenField hfId = (HiddenField)item.FindControl("hfIdTarjeta");
+                            idTarjetaSeleccionada = int.Parse(hfId.Value);
+                            check = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (check == false)
+                {
+                    lblMensaje.Text = "Por favor, seleccioná un método de pago.";
+                    return;
+                }
+                else
+                {
+                    CompraNegocio compraNegocio = new CompraNegocio();
+                    Compra compra = new Compra();
+                    Cliente cliente = (Cliente)Session["cliente"];
+                    compra.Total = decimal.Parse(Request.QueryString["total"]);
+                    compra.FechaCompra = DateTime.Now;
+                    compra.IdEstadoCompra = 1;
+                    compra.IdCliente = cliente.IdCliente;
+                    bool compraOk = compraNegocio.Agregar(compra);
+                    if (compraOk)
+                    {
+                        string msg = "Se registro la compra correctamente";
+                        Session.Add("msgOk", msg);
+                        Response.Redirect("AltaModObj.aspx");
+                    }
+                    else
+                    {
+                        Session.Add("error", "\"No se pudo realizar la compra.");
+                        Response.Redirect("Error.aspx");
                     }
                 }
             }
-
-            if (metodoSeleccionado == "")
+            catch (System.Threading.ThreadAbortException ex) { }
+            catch (Exception)
             {
-                lblMensaje.Text = "Por favor, seleccioná un método de pago.";
-                return;
+                Session.Add("error", "No se pudo realizar la compra.");
+                Response.Redirect("Error.aspx");
             }
-
         }
     }
 }

@@ -48,6 +48,8 @@
     <Compile Include="CategoriaNegocio.cs" />
     <Compile Include="ClienteNegocio.cs" />
     <Compile Include="ClienteTarjetaNegocio.cs" />
+    <Compile Include="CompraNegocio.cs" />
+    <Compile Include="EstadoCompraNegocio.cs" />
     <Compile Include="ImagenNegocio.cs" />
     <Compile Include="MarcaNegocio.cs" />
     <Compile Include="PagoNegocios.cs" />
