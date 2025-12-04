@@ -80,7 +80,7 @@
                 <div class="card h-100 shadow-sm">
                     <div class="ratio ratio-1x1">
                         <div id="carouselExampleFade<%=prd.IdProducto %>" class="carousel slide carousel-fade">
-                            <div class="carousel-inner">
+                            <div class="carousel-inner h-100">
                                 <%
                                     for (int i = 0; i < prd.ListImagen.Count; i++)
                                     {
@@ -88,8 +88,8 @@
                                         {
                                 %>
 
-                                <div class="carousel-item active">
-                                    <img src="<% =prd.ListImagen[i].ImagenUrl %>" class="d-block w-100" alt="...">
+                                <div class="carousel-item active h-100">
+                                    <img src="<% =prd.ListImagen[i].ImagenUrl %>" class="d-block w-100 h-100" style="object-fit: contain;"  alt="...">
                                 </div>
                                 <%
 
@@ -98,8 +98,8 @@
                                     {
                                 %>
 
-                                <div class="carousel-item">
-                                    <img src="<% =prd.ListImagen[i].ImagenUrl %>" class="d-block w-100" alt="...">
+                                <div class="carousel-item h-100">
+                                    <img src="<% =prd.ListImagen[i].ImagenUrl %>" class="d-block w-100 h-100" style="object-fit: contain;"  alt="...">
                                 </div>
                                 <%
                                         }

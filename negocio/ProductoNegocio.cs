@@ -16,52 +16,102 @@ namespace negocio
         {
             List<Producto> lista = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
+            Producto prdAct = null;
+            int idPrdAct = -1, idNuevoPrd = -1;
 
-            string consulta =
-                "SELECT I.IdProducto, I.Nombre, I.Descripcion, I.Precio, I.Stock, " +
-                "M.Descripcion Marca, C.Descripcion Categoria, I.Estado " +
-                "FROM ITEM I " +
-                "INNER JOIN MARCA M ON I.IdMarca = M.IdMarca " +
-                "INNER JOIN CATEGORIA C ON I.IdCategoria = C.IdCategoria " +
+            try
+            {
+               string consulta = "select it.IdProducto,it.Nombre,it.Descripcion,it.Precio,it.Stock,it.PaisOrigen,it.IdCategoria,c.Nombre as cNombre,it.IdMarca,m.Nombre as mNombre,it.Peso,it.Estado,e.IdImagen,e.ImagenUrl " +
+                    " from ITEM it " +
+                    " INNER JOIN MARCA M on it.IdMarca = m.IdMarca " +
+                    " INNER JOIN CATEGORIA C on it.IdCategoria = c.IdCategoria " +
+                    " LEFT JOIN IMAGEN e on it.IdProducto = e.IdProducto " +
                 "WHERE 1=1 ";
 
-            if (campo == "Marca")
-                consulta += " AND I.IdMarca = @valor";
+                if (campo == "Marca")
+                    consulta += " AND it.IdMarca = @valor";
 
-            else if (campo == "Categoria")
-                consulta += " AND I.IdCategoria = @valor";
+                else if (campo == "Categoria")
+                    consulta += " AND it.IdCategoria = @valor";
 
-            else if (campo == "Precio")
-                consulta += " AND I.Precio > @valor";
+                else if (campo == "Precio")
+                    consulta += " AND it.Precio > @valor";
 
 
-            if (estado == "Activo")
-                consulta += " AND I.Estado = 1";
+                if (estado == "Activo")
+                    consulta += " AND it.Estado = 1";
 
-            else if (estado == "Inactivo")
-                consulta += " AND I.Estado = 0";
+                else if (estado == "Inactivo")
+                    consulta += " AND it.Estado = 0";
 
-            datos.setearConsulta(consulta);
+                consulta += " order by it.IdProducto ";
 
-            if (campo == "Marca" || campo == "Categoria" || campo == "Precio")
-                datos.setearParametro("@valor", valor);
+                datos.setearConsulta(consulta);
 
-            datos.ejecutarLectura();
+                if (campo == "Marca" || campo == "Categoria" || campo == "Precio")
+                    datos.setearParametro("@valor", valor);
 
-            while (datos.Lector.Read())
-            {
-                Producto aux = new Producto();
+                datos.ejecutarLectura();
 
-                aux.IdProducto = (int)datos.Lector["IdProducto"];
-                aux.Nombre = (string)datos.Lector["Nombre"];
-                aux.Descripcion = (string)datos.Lector["Descripcion"];
-                aux.Precio = (decimal)datos.Lector["Precio"];
-                aux.Estado = (bool)datos.Lector["Estado"];
+                while (datos.Lector.Read())
+                {
+                    idNuevoPrd = datos.Lector.GetInt32(0);
 
-                lista.Add(aux);
+                    if (idPrdAct != idNuevoPrd)
+                    {
+                        if (idPrdAct != -1) lista.Add(prdAct);
+                        prdAct = new Producto();
+                        idPrdAct = idNuevoPrd;
+                        prdAct.IdProducto = idNuevoPrd;
+                        prdAct.Nombre = (string)datos.Lector["Nombre"];
+                        prdAct.Descripcion = (string)datos.Lector["Descripcion"];
+                        prdAct.Precio = (decimal)datos.Lector["Precio"];
+                        prdAct.Stock = (int)datos.Lector["Stock"];
+                        prdAct.Estado = (bool)datos.Lector["Estado"];
+                        prdAct.Peso = (decimal)datos.Lector["Peso"];
+
+                        if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("PaisOrigen")))
+                        {
+                            prdAct.Pais = (string)datos.Lector["PaisOrigen"];
+                        }
+                        else
+                        {
+                            prdAct.Pais = "Sin especificar";
+                        }
+
+                        prdAct.Categoria = new Categoria();
+                        prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
+                        prdAct.Categoria.Nombre = (string)datos.Lector["cNombre"];
+
+                        prdAct.Marca = new Marca();
+                        prdAct.Marca.IdMarca = (int)datos.Lector["IdMarca"];
+                        prdAct.Marca.Nombre = (string)datos.Lector["mNombre"];
+
+                        prdAct.ListImagen = new List<Imagen>();
+                    }
+
+                    if (!datos.Lector.IsDBNull(datos.Lector.GetOrdinal("IdImagen")))
+                    {
+                        Imagen auxImagen = new Imagen();
+                        auxImagen.ID = (int)datos.Lector["IdImagen"];
+                        auxImagen.IdArticulo = (int)datos.Lector["IdProducto"];
+                        auxImagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                        prdAct.ListImagen.Add(auxImagen);
+                    }
+                }
+
+                if (idPrdAct != -1) lista.Add(prdAct);
+
+                return lista;
             }
-            datos.cerrarConexion();
-            return lista;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }            
         }
 
 
