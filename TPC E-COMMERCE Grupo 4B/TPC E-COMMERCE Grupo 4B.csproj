@@ -74,6 +74,7 @@
     <Content Include="ABMCategorias.aspx" />
     <Content Include="ABMItem.aspx" />
     <Content Include="ABMMarcas.aspx" />
+    <Content Include="ABMTarjetas.aspx" />
     <Content Include="AdminDashboard.aspx" />
     <Content Include="AltaCliente.aspx" />
     <Content Include="AltaProveedor.aspx" />
@@ -110,6 +111,13 @@
     </Compile>
     <Compile Include="ABMMarcas.aspx.designer.cs">
       <DependentUpon>ABMMarcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ABMTarjetas.aspx.cs">
+      <DependentUpon>ABMTarjetas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMTarjetas.aspx.designer.cs">
+      <DependentUpon>ABMTarjetas.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminDashboard.aspx.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>

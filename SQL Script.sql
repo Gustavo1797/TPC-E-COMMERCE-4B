@@ -6,6 +6,8 @@ use TPC_ECOMMERCE_4B_DB
 go
 
 
+DROP TABLE IF EXISTS ClienteTarjeta;
+go
 DROP TABLE IF EXISTS Imagen;
 go
 DROP TABLE IF EXISTS Item;    
@@ -94,6 +96,17 @@ Create Table Imagen(
     Estado bit not null,
     
     FOREIGN KEY (IdProducto) REFERENCES Item(IdProducto)
+)
+go
+
+Create Table ClienteTarjeta(
+    IdTarjeta int not null primary key identity(1, 1),
+    IdCliente int not null,
+    Nombre varchar(100) not null,
+    NumeroDeSerie varchar(20) not null,
+    ImagenUrlTarj varchar(1000) not null,
+    
+    FOREIGN KEY (IdCliente) REFERENCES Clientes(IdCliente)
 )
 go
 

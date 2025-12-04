@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace dominio
+{
+    public class ClienteTarjeta
+    {
+        public int IdCliente { get; set; }
+        public int IdTarjeta { get; set; }
+        public string Nombre { get; set; } 
+        public string NumeroDeSerie { get; set; }
+        public string ImagenUrlTarj { get; set; }
+    }
+}
