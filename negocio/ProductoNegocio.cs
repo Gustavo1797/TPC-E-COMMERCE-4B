@@ -12,6 +12,59 @@ namespace negocio
 {
     public class ProductoNegocio
     {
+        public List<Producto> ListarConFiltro(string campo, string valor, string estado)
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            string consulta =
+                "SELECT I.IdProducto, I.Nombre, I.Descripcion, I.Precio, I.Stock, " +
+                "M.Descripcion Marca, C.Descripcion Categoria, I.Estado " +
+                "FROM ITEM I " +
+                "INNER JOIN MARCA M ON I.IdMarca = M.IdMarca " +
+                "INNER JOIN CATEGORIA C ON I.IdCategoria = C.IdCategoria " +
+                "WHERE 1=1 ";
+
+            if (campo == "Marca")
+                consulta += " AND I.IdMarca = @valor";
+
+            else if (campo == "Categoria")
+                consulta += " AND I.IdCategoria = @valor";
+
+            else if (campo == "Precio")
+                consulta += " AND I.Precio > @valor";
+
+
+            if (estado == "Activo")
+                consulta += " AND I.Estado = 1";
+
+            else if (estado == "Inactivo")
+                consulta += " AND I.Estado = 0";
+
+            datos.setearConsulta(consulta);
+
+            if (campo == "Marca" || campo == "Categoria" || campo == "Precio")
+                datos.setearParametro("@valor", valor);
+
+            datos.ejecutarLectura();
+
+            while (datos.Lector.Read())
+            {
+                Producto aux = new Producto();
+
+                aux.IdProducto = (int)datos.Lector["IdProducto"];
+                aux.Nombre = (string)datos.Lector["Nombre"];
+                aux.Descripcion = (string)datos.Lector["Descripcion"];
+                aux.Precio = (decimal)datos.Lector["Precio"];
+                aux.Estado = (bool)datos.Lector["Estado"];
+
+                lista.Add(aux);
+            }
+            datos.cerrarConexion();
+            return lista;
+        }
+
+
         public List<Producto> ListarTodosProductos()
         {
             List<Producto> lista = new List<Producto>();
@@ -60,11 +113,11 @@ namespace negocio
                         prdAct.Categoria = new Categoria();
                         prdAct.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                         prdAct.Categoria.Nombre = (string)datos.Lector["cNombre"];
-                        
+
                         prdAct.Marca = new Marca();
                         prdAct.Marca.IdMarca = (int)datos.Lector["IdMarca"];
                         prdAct.Marca.Nombre = (string)datos.Lector["mNombre"];
-                        
+
                         prdAct.ListImagen = new List<Imagen>();
                     }
 
